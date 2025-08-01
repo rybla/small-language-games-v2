@@ -50,11 +50,16 @@ export type Turn<S extends Sig> = {
   actions: S["action"][];
 };
 
+export type ClientInst<S extends Sig> = {
+  metadata: InstMetadata;
+  view: S["view"];
+};
+
 export type Endpoint<S extends Sig> = {
   getInstMetadatas: () => Promise<InstMetadata[]>;
-  initializeState: (params: S["params_initialize"]) => Promise<InstMetadata>;
+  initializeInst: (params: S["params_initialize"]) => Promise<InstMetadata>;
   loadInst: (id: string) => Promise<void>;
   saveInst: (name?: string) => Promise<void>;
-  getInstView: () => Promise<S["view"]>;
+  getInst: () => Promise<ClientInst<S>>;
   actInst: (params: S["params_action"]) => Promise<void>;
 };

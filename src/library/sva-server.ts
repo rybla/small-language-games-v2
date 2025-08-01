@@ -1,6 +1,6 @@
 import { stat_safe } from "@/utility_fs";
 import Paths from "./paths";
-import { Endpoint, Inst, InstMetadata, Sig, Spec } from "./sva";
+import { ClientInst, Endpoint, Inst, InstMetadata, Sig, Spec } from "./sva";
 import * as fs from "fs/promises";
 import path from "path";
 import { deepcopy, stringify, try_ } from "@/utility";
@@ -20,10 +20,10 @@ export class Server<S extends Sig> {
 
   make_endpoint(): Endpoint<S> {
     return {
-      initializeState: (params) => this.initializeInst(params),
+      initializeInst: (params) => this.initializeInst(params),
       getInstMetadatas: () => this.getInstMetadatas(),
       actInst: (params) => this.actInst(params),
-      getInstView: () => this.getInstView(),
+      getInst: () => this.getInst(),
       loadInst: (id) => this.loadInst(id),
       saveInst: (name) => this.saveInst(name),
     };
@@ -45,6 +45,7 @@ export class Server<S extends Sig> {
       state: initialState,
       turns: [],
     };
+    this.saveInst();
     return metadata;
   }
 
@@ -119,25 +120,26 @@ export class Server<S extends Sig> {
       this.inst.metadata.id,
     );
 
-    await Promise.all([
-      fs.mkdir(path.dirname(inst_filepath), { recursive: true }),
-      fs.writeFile(inst_filepath, JSON.stringify(this.inst, null, 2)),
-      fs.mkdir(path.dirname(instMetadata_filepath), { recursive: true }),
-      fs.writeFile(
-        instMetadata_filepath,
-        JSON.stringify(this.inst.metadata, null, 2),
-      ),
-    ]);
+    await fs.mkdir(path.dirname(inst_filepath), { recursive: true });
+    await fs.writeFile(inst_filepath, JSON.stringify(this.inst, null, 2));
+    await fs.mkdir(path.dirname(instMetadata_filepath), { recursive: true });
+    await fs.writeFile(
+      instMetadata_filepath,
+      JSON.stringify(this.inst.metadata, null, 2),
+    );
   }
 
-  async getInstView(): Promise<S["view"]> {
+  async getInst(): Promise<ClientInst<S>> {
     if (this.inst === null)
       throw new Error("[server.getView] Instance not loaded");
-    return await this.spec.view(
-      this.inst.metadata,
-      this.inst.turns,
-      this.inst.state,
-    );
+    return {
+      metadata: this.inst.metadata,
+      view: await this.spec.view(
+        this.inst.metadata,
+        this.inst.turns,
+        this.inst.state,
+      ),
+    };
   }
 
   /**
@@ -147,7 +149,7 @@ export class Server<S extends Sig> {
   async actInst(params: S["params_action"]): Promise<void> {
     if (this.inst === null) throw new Error("[server.act] Instance not loaded");
     const state = deepcopy(this.inst.state);
-    const view = await this.getInstView();
+    const view = await this.getInst();
     const actions = await this.spec.generateActions(this.inst.state, params);
     for (const action of actions) {
       await this.spec.interpretAction(this.inst.state, params, action);

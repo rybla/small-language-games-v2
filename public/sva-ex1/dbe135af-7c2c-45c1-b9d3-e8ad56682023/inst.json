@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "id": "dbe135af-7c2c-45c1-b9d3-e8ad56682023",
+    "name": "test1",
+    "creationDate": 1754054726745
+  },
+  "initialState": {
+    "counter": 0
+  },
+  "state": {
+    "counter": 0
+  },
+  "turns": []
+}

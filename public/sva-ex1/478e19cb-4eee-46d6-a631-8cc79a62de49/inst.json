@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "id": "478e19cb-4eee-46d6-a631-8cc79a62de49",
+    "name": "xxxyz",
+    "creationDate": 1754054717264
+  },
+  "initialState": {
+    "counter": 4
+  },
+  "state": {
+    "counter": 4
+  },
+  "turns": [
+    {
+      "actions": [
+        {
+          "prompt": "this "
+        }
+      ],
+      "view": {
+        "prompts": []
+      },
+      "params": {
+        "prompt": "this "
+      },
+      "state": {
+        "counter": 0
+      }
+    },
+    {
+      "actions": [
+        {
+          "prompt": "is"
+        }
+      ],
+      "view": {
+        "prompts": [
+          "this "
+        ]
+      },
+      "params": {
+        "prompt": "is"
+      },
+      "state": {
+        "counter": 1
+      }
+    },
+    {
+      "actions": [
+        {
+          "prompt": "a"
+        }
+      ],
+      "view": {
+        "prompts": [
+          "this ",
+          "is"
+        ]
+      },
+      "params": {
+        "prompt": "a"
+      },
+      "state": {
+        "counter": 2
+      }
+    },
+    {
+      "actions": [
+        {
+          "prompt": "test"
+        }
+      ],
+      "view": {
+        "prompts": [
+          "this ",
+          "is",
+          "a"
+        ]
+      },
+      "params": {
+        "prompt": "test"
+      },
+      "state": {
+        "counter": 3
+      }
+    }
+  ]
+}
