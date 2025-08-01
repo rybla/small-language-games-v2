@@ -19,10 +19,10 @@ const spec: Spec<S> = {
   view: (metadata, turns, state) => {
     throw new Error("Function not implemented.");
   },
-  generateActions: (state, view, params) => {
+  generateActions: (state, params) => {
     throw new Error("Function not implemented.");
   },
-  interpretAction: (state, view, params, action) => {
+  interpretAction: (state, params, action) => {
     throw new Error("Function not implemented.");
   },
 };

@@ -15,59 +15,121 @@ export class Server<S extends Sig> {
 
   constructor(public spec: Spec<S>) {}
 
-  async getInstMetadatas(): Promise<InstMetadata[]> {
-    const dirpath = this.paths.rootDirpath(this.spec.name);
-    fs.mkdir(dirpath, { recursive: true });
-    const filenames = await fs.readdir(dirpath);
-    const mds: InstMetadata[] = [];
-    for (const filename of filenames) {
-      if ((await stat_safe(path.join(dirpath, filename)))?.isDirectory()) {
-        const inst_id = filename;
-        const md_filepath = this.paths.instMetadataFilepath(
-          this.spec.name,
-          inst_id,
-        );
-        const md_data = await try_(
-          () => fs.readFile(md_filepath, "utf8"),
-          (error) => {
-            throw new Error(
-              `Failed to read metadata file: ${md_filepath}. ${error}`,
-            );
-          },
-        );
-        const md = await try_(
-          () => JSON.parse(md_data),
-          (error) => {
-            throw new Error(
-              `Failed to parse metadata file: ${md_filepath}. ${error}`,
-            );
-          },
-        );
-        mds.push(md);
-      }
-    }
-    return mds;
-  }
-
-  async loadInst(id: string): Promise<void> {
-    throw new Error("Function not implemented.");
-  }
-
-  async saveInst(name?: string): Promise<void> {
-    throw new Error("Function not implemented.");
-  }
-
-  async getView(): Promise<S["view"]> {
-    throw new Error("Function not implemented.");
-  }
-
-  async act(params: S["params_action"]): Promise<void> {
-    throw new Error("Function not implemented.");
-  }
+  // ----------------
 
   make_endpoint(): Endpoint<S> {
     return {
       getInstMetadatas: () => this.getInstMetadatas(),
+      act: (params) => this.act(params),
+      getView: () => this.getView(),
+      loadInst: (id) => this.loadInst(id),
+      saveInst: (name) => this.saveInst(name),
     };
+  }
+
+  // ----------------
+
+  async getInstMetadatas(): Promise<InstMetadata[]> {
+    const dirpath = this.paths.rootDirpath(this.spec.name);
+    await fs.mkdir(dirpath, { recursive: true });
+    return (
+      await Promise.all(
+        (await fs.readdir(dirpath)).map(async (filename) => {
+          if (!(await stat_safe(path.join(dirpath, filename)))?.isDirectory())
+            return [];
+          const inst_id = filename;
+          const md_filepath = this.paths.instMetadataFilepath(
+            this.spec.name,
+            inst_id,
+          );
+          const md_raw = await try_(
+            () => fs.readFile(md_filepath, "utf8"),
+            (error) => {
+              throw new Error(
+                `Failed to read metadata file ${md_filepath}: ${error}`,
+              );
+            },
+          );
+          const md: InstMetadata = await try_(
+            () => JSON.parse(md_raw),
+            (error) => {
+              throw new Error(
+                `Failed to parse metadata file ${md_filepath}: ${error}`,
+              );
+            },
+          );
+          return [md];
+        }),
+      )
+    ).flat();
+  }
+
+  async loadInst(id: string): Promise<void> {
+    const inst_filepath = this.paths.instFilepath(this.spec.name, id);
+    await fs.mkdir(path.dirname(inst_filepath), { recursive: true });
+    const inst_raw = await try_(
+      () => fs.readFile(inst_filepath, "utf8"),
+      (error) => {
+        throw new Error(
+          `Failed to read instance file ${inst_filepath}: ${error}`,
+        );
+      },
+    );
+    const inst = try_(
+      () => JSON.parse(inst_raw),
+      (error) => {
+        throw new Error(
+          `Failed to parse instance file ${inst_filepath}: ${error}`,
+        );
+      },
+    );
+    this.inst = inst;
+  }
+
+  async saveInst(name?: string): Promise<void> {
+    if (this.inst === null) return;
+    if (name !== undefined) {
+      this.inst.metadata.name = name;
+    }
+    const inst_filepath = this.paths.instFilepath(
+      this.spec.name,
+      this.inst.metadata.id,
+    );
+    const instMetadata_filepath = this.paths.instMetadataFilepath(
+      this.spec.name,
+      this.inst.metadata.id,
+    );
+
+    await Promise.all([
+      fs.mkdir(path.dirname(inst_filepath), { recursive: true }),
+      fs.writeFile(inst_filepath, JSON.stringify(this.inst, null, 2)),
+      fs.mkdir(path.dirname(instMetadata_filepath), { recursive: true }),
+      fs.writeFile(
+        instMetadata_filepath,
+        JSON.stringify(this.inst.metadata, null, 2),
+      ),
+    ]);
+  }
+
+  async getView(): Promise<S["view"]> {
+    if (this.inst === null)
+      throw new Error("[server.getView] Instance not loaded");
+    return await this.spec.view(
+      this.inst.metadata,
+      this.inst.turns,
+      this.inst.state,
+    );
+  }
+
+  /**
+   * Interpretation is sequential, so the interpretation of subsequent actions
+   * uses the state that has been modified by preceeding action interpretations.
+   */
+  async act(params: S["params_action"]): Promise<void> {
+    if (this.inst === null) throw new Error("[server.act] Instance not loaded");
+    const actions = await this.spec.generateActions(this.inst.state, params);
+    for (const action of actions) {
+      await this.spec.interpretAction(this.inst.state, params, action);
+    }
   }
 }

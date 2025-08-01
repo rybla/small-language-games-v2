@@ -26,13 +26,11 @@ export type Spec<S extends Sig> = {
   ) => Promise<S["view"]>;
   generateActions: (
     state: S["state"],
-    view: S["view"],
     params: S["params_action"],
   ) => Promise<S["action"][]>;
   // only here should the state be modified
   interpretAction: (
     state: S["state"],
-    view: S["view"],
     params: S["params_action"],
     action: S["action"],
   ) => Promise<void>;
