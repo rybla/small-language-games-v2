@@ -15,7 +15,7 @@ export type InstMetadata = {
 
 export type Spec<S extends Sig> = {
   name: S["name"];
-  initialize: (
+  initializeState: (
     metadata: InstMetadata,
     params: S["params_initialize"],
   ) => Promise<S["state"]>;
@@ -52,8 +52,9 @@ export type Turn<S extends Sig> = {
 
 export type Endpoint<S extends Sig> = {
   getInstMetadatas: () => Promise<InstMetadata[]>;
+  initializeState: (params: S["params_initialize"]) => Promise<InstMetadata>;
   loadInst: (id: string) => Promise<void>;
   saveInst: (name?: string) => Promise<void>;
-  getView: () => Promise<S["view"]>;
-  act: (params: S["params_action"]) => Promise<void>;
+  getInstView: () => Promise<S["view"]>;
+  actInst: (params: S["params_action"]) => Promise<void>;
 };

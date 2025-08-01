@@ -13,17 +13,21 @@ export async function test() {
 
 const spec: Spec<S> = {
   name: "sva-ex1",
-  initialize: (metadata, params) => {
-    throw new Error("Function not implemented.");
+  async initializeState(metadata, params) {
+    return { counter: 0 };
   },
-  view: (metadata, turns, state) => {
-    throw new Error("Function not implemented.");
+  async view(metadata, turns, state) {
+    return {
+      prompts: turns.flatMap((turn) =>
+        turn.actions.map((action) => action.prompt),
+      ),
+    };
   },
-  generateActions: (state, params) => {
-    throw new Error("Function not implemented.");
+  async generateActions(state, params) {
+    return [{ prompt: params.prompt }];
   },
-  interpretAction: (state, params, action) => {
-    throw new Error("Function not implemented.");
+  async interpretAction(state, params, action) {
+    state.counter++;
   },
 };
 
@@ -33,7 +37,7 @@ const server = new Server(spec);
 
 const endpoint_impl = server.make_endpoint();
 
-export async function endpoint<S extends Sig, K extends keyof Endpoint<S>>(
+export async function endpoint<K extends keyof Endpoint<S>>(
   key: K,
   ...args: Domains<Endpoint<S>[K]>
 ): Promise<Codomain<Endpoint<S>[K]>> {

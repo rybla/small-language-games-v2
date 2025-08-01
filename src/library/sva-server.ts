@@ -3,7 +3,8 @@ import Paths from "./paths";
 import { Endpoint, Inst, InstMetadata, Sig, Spec } from "./sva";
 import * as fs from "fs/promises";
 import path from "path";
-import { try_ } from "@/utility";
+import { deepcopy, stringify, try_ } from "@/utility";
+import { randomUUID } from "crypto";
 
 // -----------------------------------------------------------------------------
 // Server
@@ -19,15 +20,33 @@ export class Server<S extends Sig> {
 
   make_endpoint(): Endpoint<S> {
     return {
+      initializeState: (params) => this.initializeInst(params),
       getInstMetadatas: () => this.getInstMetadatas(),
-      act: (params) => this.act(params),
-      getView: () => this.getView(),
+      actInst: (params) => this.actInst(params),
+      getInstView: () => this.getInstView(),
       loadInst: (id) => this.loadInst(id),
       saveInst: (name) => this.saveInst(name),
     };
   }
 
   // ----------------
+
+  async initializeInst(params: S["params_initialize"]): Promise<InstMetadata> {
+    const id = randomUUID();
+    const metadata: InstMetadata = {
+      id,
+      name: id,
+      creationDate: Date.now(),
+    };
+    const initialState = await this.spec.initializeState(metadata, params);
+    this.inst = {
+      metadata,
+      initialState,
+      state: initialState,
+      turns: [],
+    };
+    return metadata;
+  }
 
   async getInstMetadatas(): Promise<InstMetadata[]> {
     const dirpath = this.paths.rootDirpath(this.spec.name);
@@ -111,7 +130,7 @@ export class Server<S extends Sig> {
     ]);
   }
 
-  async getView(): Promise<S["view"]> {
+  async getInstView(): Promise<S["view"]> {
     if (this.inst === null)
       throw new Error("[server.getView] Instance not loaded");
     return await this.spec.view(
@@ -125,11 +144,21 @@ export class Server<S extends Sig> {
    * Interpretation is sequential, so the interpretation of subsequent actions
    * uses the state that has been modified by preceeding action interpretations.
    */
-  async act(params: S["params_action"]): Promise<void> {
+  async actInst(params: S["params_action"]): Promise<void> {
     if (this.inst === null) throw new Error("[server.act] Instance not loaded");
+    const state = deepcopy(this.inst.state);
+    const view = await this.getInstView();
     const actions = await this.spec.generateActions(this.inst.state, params);
     for (const action of actions) {
       await this.spec.interpretAction(this.inst.state, params, action);
     }
+    this.inst.turns.push({
+      actions,
+      view,
+      params,
+      state,
+    });
+
+    console.log(stringify(this.inst.turns));
   }
 }
