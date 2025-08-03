@@ -1,0 +1,357 @@
+{
+  "metadata": {
+    "id": "c7dda98f-3b18-4ae4-a228-1863d66d25e1",
+    "name": "c7dda98f-3b18-4ae4-a228-1863d66d25e1",
+    "creationDate": 1754257248026
+  },
+  "initialState": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hi, what's you name?"
+        },
+        "response": "Benny. What's yours?"
+      },
+      {
+        "params": {
+          "prompt": "my name is henry"
+        },
+        "response": "Nice to meet you, Henry. So, what brings you here?"
+      }
+    ],
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        }
+      },
+      "edges": {}
+    },
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "I know the best recipe for pizza.",
+        "The user's name is Henry."
+      ],
+      "mood": "neutral"
+    }
+  },
+  "state": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hi, what's you name?"
+        },
+        "response": "Benny. What's yours?"
+      },
+      {
+        "params": {
+          "prompt": "my name is henry"
+        },
+        "response": "Nice to meet you, Henry. So, what brings you here?"
+      },
+      {
+        "params": {
+          "prompt": "I also love gardening "
+        },
+        "response": "Oh, that's cool! I actually know the best recipe for pizza. Have you ever tried making your own?"
+      },
+      {
+        "params": {
+          "prompt": "nope"
+        },
+        "response": "Well, if you ever want to try it, I can share the recipe with you. It's a real crowd-pleaser. But hey, since you're into gardening, what kind of plants do you like to grow?"
+      },
+      {
+        "params": {
+          "prompt": "cool"
+        },
+        "response": "So, about those plants, Henry? Anything exciting blooming right now?"
+      }
+    ],
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        }
+      },
+      "edges": {}
+    },
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "I know the best recipe for pizza.",
+        "The user's name is Henry.",
+        "Henry loves gardening"
+      ],
+      "mood": "neutral"
+    }
+  },
+  "turns": [
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Benny. What's yours?"
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "hi, what's you name?"
+      },
+      "state": {
+        "turns": [],
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            }
+          },
+          "edges": {}
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza."
+          ],
+          "mood": "neutral"
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Nice to meet you, Henry. So, what brings you here?"
+        },
+        {
+          "type": "diffs",
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "The user's name is Henry."
+            }
+          ]
+        }
+      ],
+      "params": {
+        "prompt": "my name is henry"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hi, what's you name?"
+            },
+            "response": "Benny. What's yours?"
+          }
+        ],
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            }
+          },
+          "edges": {}
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza."
+          ],
+          "mood": "neutral"
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Oh, that's cool! I actually know the best recipe for pizza. Have you ever tried making your own?"
+        },
+        {
+          "type": "diffs",
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "Henry loves gardening"
+            }
+          ]
+        }
+      ],
+      "params": {
+        "prompt": "I also love gardening "
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hi, what's you name?"
+            },
+            "response": "Benny. What's yours?"
+          },
+          {
+            "params": {
+              "prompt": "my name is henry"
+            },
+            "response": "Nice to meet you, Henry. So, what brings you here?"
+          }
+        ],
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            }
+          },
+          "edges": {}
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza.",
+            "The user's name is Henry."
+          ],
+          "mood": "neutral"
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Well, if you ever want to try it, I can share the recipe with you. It's a real crowd-pleaser. But hey, since you're into gardening, what kind of plants do you like to grow?"
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "nope"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hi, what's you name?"
+            },
+            "response": "Benny. What's yours?"
+          },
+          {
+            "params": {
+              "prompt": "my name is henry"
+            },
+            "response": "Nice to meet you, Henry. So, what brings you here?"
+          },
+          {
+            "params": {
+              "prompt": "I also love gardening "
+            },
+            "response": "Oh, that's cool! I actually know the best recipe for pizza. Have you ever tried making your own?"
+          }
+        ],
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            }
+          },
+          "edges": {}
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza.",
+            "The user's name is Henry.",
+            "Henry loves gardening"
+          ],
+          "mood": "neutral"
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "So, about those plants, Henry? Anything exciting blooming right now?"
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "cool"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hi, what's you name?"
+            },
+            "response": "Benny. What's yours?"
+          },
+          {
+            "params": {
+              "prompt": "my name is henry"
+            },
+            "response": "Nice to meet you, Henry. So, what brings you here?"
+          },
+          {
+            "params": {
+              "prompt": "I also love gardening "
+            },
+            "response": "Oh, that's cool! I actually know the best recipe for pizza. Have you ever tried making your own?"
+          },
+          {
+            "params": {
+              "prompt": "nope"
+            },
+            "response": "Well, if you ever want to try it, I can share the recipe with you. It's a real crowd-pleaser. But hey, since you're into gardening, what kind of plants do you like to grow?"
+          }
+        ],
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            }
+          },
+          "edges": {}
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza.",
+            "The user's name is Henry.",
+            "Henry loves gardening"
+          ],
+          "mood": "neutral"
+        }
+      }
+    }
+  ]
+}

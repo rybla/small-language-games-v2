@@ -130,6 +130,10 @@ function ViewComponent(props: {
             defaultValue={props.inst.metadata.name}
           />
         </div>
+        <div className={styles.raw}>
+          <div>npcState</div>
+          <pre>{stringify(props.inst.view.state.npcState)}</pre>
+        </div>
       </div>
       <div className={styles.chat}>
         <div className={styles.title}>History</div>

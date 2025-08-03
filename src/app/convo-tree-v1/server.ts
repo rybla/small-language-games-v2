@@ -3,7 +3,7 @@
 import { Endpoint, Spec } from "@/library/sva";
 import { Server } from "@/library/sva-server";
 import { Codomain, Domains, match } from "@/utility";
-import { Action, ActionRow, name, S } from "./common";
+import { Action, ActionRow, ConvoTree, name, S } from "./common";
 import * as flow from "./flow";
 import {
   getConvoTreeEdge,
@@ -16,17 +16,28 @@ const spec: Spec<S> = {
   name,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async initializeState(metadata, params) {
+    const nodes = {
+      node1: { id: "node1" },
+      node2: { id: "node2" },
+    } satisfies ConvoTree["nodes"];
+
+    const edges = {
+      edge1: {
+        id: "edge1",
+        sourceId: nodes.node1.id,
+        targetId: nodes.node2.id,
+        preds: [{ type: "knowsFact", fact: "the user is a gardner" }],
+        diffs: [{ type: "learnFact", fact: 'the password is "genie123"' }],
+      },
+    } satisfies ConvoTree["edges"];
+
     return {
       turns: [],
-      currentId: "node1",
+      currentId: nodes.node1.id,
       convoTree: {
-        root: "node1",
-        nodes: {
-          node1: {
-            id: "node1",
-          },
-        },
-        edges: {},
+        root: nodes.node1.id,
+        nodes,
+        edges,
       },
       npcState: {
         name: "Benny",
@@ -45,7 +56,9 @@ const spec: Spec<S> = {
   async generateActions(turns, state, params) {
     const node = getCurrentConvoTreeNode(state);
     const edges = getConvoTreeEdgesFromNode(state.convoTree, node.id);
+    console.log(`[generateActions] edges: ${edges.map((edge) => edge.id)}`);
     for (const edge of edges) {
+      console.log(`[InterpretNpcStatePredicates] considering edge ${edge.id}`);
       const edgeIsSatisfied = await flow.InterpretNpcStatePredicates({
         state: state.npcState,
         preds: edge.preds,
@@ -76,6 +89,7 @@ const spec: Spec<S> = {
       async followEdge(x) {
         const edge = getConvoTreeEdge(state.convoTree, x.edgeId);
         state.currentId = edge.targetId;
+        await runNpcStateDiffs(edge.diffs, state.npcState);
       },
       async respond(x) {
         state.turns.push({ params, response: x.response });

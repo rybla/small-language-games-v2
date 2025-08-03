@@ -162,7 +162,5 @@ export class Server<S extends Sig> {
       params,
       state,
     });
-
-    console.log(stringify(this.inst.turns));
   }
 }

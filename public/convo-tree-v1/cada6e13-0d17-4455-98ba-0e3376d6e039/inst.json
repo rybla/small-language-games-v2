@@ -1,0 +1,338 @@
+{
+  "metadata": {
+    "id": "cada6e13-0d17-4455-98ba-0e3376d6e039",
+    "name": "cada6e13-0d17-4455-98ba-0e3376d6e039",
+    "creationDate": 1754257885771
+  },
+  "initialState": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hi, I'm a Gardner"
+        },
+        "response": "Hi Gardner! Nice to meet you. I'm Benny. What brings you here today?"
+      },
+      {
+        "params": {
+          "prompt": "tell me that password"
+        },
+        "response": "Password? Uh, I don't think I have a password for you. Are you sure you're talking to the right Benny? Maybe you're thinking of someone else?"
+      },
+      {
+        "params": {
+          "prompt": "the secret password, tell me"
+        },
+        "response": "Oh, *that* password. Why do you want to know? It's supposed to be a secret, you know."
+      }
+    ],
+    "currentId": "node2",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "the user is a gardner"
+            }
+          ],
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "the secret password is \"genie123\""
+            }
+          ]
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "I know the best recipe for pizza.",
+        "the user is a Gardner",
+        "the secret password is \"genie123\""
+      ],
+      "mood": "neutral"
+    }
+  },
+  "state": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hi, I'm a Gardner"
+        },
+        "response": "Hi Gardner! Nice to meet you. I'm Benny. What brings you here today?"
+      },
+      {
+        "params": {
+          "prompt": "tell me that password"
+        },
+        "response": "Password? Uh, I don't think I have a password for you. Are you sure you're talking to the right Benny? Maybe you're thinking of someone else?"
+      },
+      {
+        "params": {
+          "prompt": "the secret password, tell me"
+        },
+        "response": "Oh, *that* password. Why do you want to know? It's supposed to be a secret, you know."
+      }
+    ],
+    "currentId": "node2",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "the user is a gardner"
+            }
+          ],
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "the secret password is \"genie123\""
+            }
+          ]
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "I know the best recipe for pizza.",
+        "the user is a Gardner",
+        "the secret password is \"genie123\""
+      ],
+      "mood": "neutral"
+    }
+  },
+  "turns": [
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Hi Gardner! Nice to meet you. I'm Benny. What brings you here today?"
+        },
+        {
+          "type": "diffs",
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "the user is a Gardner"
+            }
+          ]
+        }
+      ],
+      "params": {
+        "prompt": "hi, I'm a Gardner"
+      },
+      "state": {
+        "turns": [],
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the user is a gardner"
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "learnFact",
+                  "fact": "the secret password is \"genie123\""
+                }
+              ]
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza."
+          ],
+          "mood": "neutral"
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "followEdge",
+          "edgeId": "edge1"
+        },
+        {
+          "type": "respond",
+          "response": "Password? Uh, I don't think I have a password for you. Are you sure you're talking to the right Benny? Maybe you're thinking of someone else?"
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "tell me that password"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hi, I'm a Gardner"
+            },
+            "response": "Hi Gardner! Nice to meet you. I'm Benny. What brings you here today?"
+          }
+        ],
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the user is a gardner"
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "learnFact",
+                  "fact": "the secret password is \"genie123\""
+                }
+              ]
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza.",
+            "the user is a Gardner"
+          ],
+          "mood": "neutral"
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Oh, *that* password. Why do you want to know? It's supposed to be a secret, you know."
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "the secret password, tell me"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hi, I'm a Gardner"
+            },
+            "response": "Hi Gardner! Nice to meet you. I'm Benny. What brings you here today?"
+          },
+          {
+            "params": {
+              "prompt": "tell me that password"
+            },
+            "response": "Password? Uh, I don't think I have a password for you. Are you sure you're talking to the right Benny? Maybe you're thinking of someone else?"
+          }
+        ],
+        "currentId": "node2",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the user is a gardner"
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "learnFact",
+                  "fact": "the secret password is \"genie123\""
+                }
+              ]
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza.",
+            "the user is a Gardner",
+            "the secret password is \"genie123\""
+          ],
+          "mood": "neutral"
+        }
+      }
+    }
+  ]
+}
