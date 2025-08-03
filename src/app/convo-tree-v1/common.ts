@@ -1,4 +1,4 @@
-import { Sig, Turn } from "@/library/sva";
+import { Sig } from "@/library/sva";
 import { Subtype, UnionToRecord } from "@/utility";
 import { z } from "genkit";
 
@@ -22,7 +22,7 @@ export type S = Subtype<
 
 export type View = {
   state: State;
-  turns: Turn<S>[];
+  turns: { params: S["params_action"]; actions: Action[] }[];
 };
 
 export type State = z.infer<typeof State>;

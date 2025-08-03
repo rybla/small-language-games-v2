@@ -1,0 +1,279 @@
+/*
+================================================================================
+|   DIGITAL NEO-BRUTALISM DESIGN SYSTEM BLUEPRINT                              |
+================================================================================
+|
+|   CORE PRINCIPLES:
+|   1. HONESTY OF MATERIAL: The design exposes its own structure. Containers,
+|      grids, and borders are not hidden but are primary aesthetic elements.
+|      The user should feel the underlying digital "concrete."
+|
+|   2. STRONG HIERARCHY: Information is presented with unapologetic clarity.
+|      Scale, weight, and color are used to create a dominant visual flow,
+|      eliminating ambiguity.
+|
+|   3. UNAPOLOGETIC PRESENCE: Elements are solid, tangible, and confident.
+|      Hard shadows, high-contrast colors, and stark typography create a
+|      memorable, three-dimensional interface.
+|
+|   4. FUNCTION OVER FORM: Every element serves a purpose. The aesthetic
+|      arises directly from the function of the components, not from added
+|      decoration.
+|
+|--------------------------------------------------------------------------------
+|
+|   COMPONENT STYLES:
+|
+|   - BUTTONS:
+|     - Appearance: Solid accent color, 2px black border, uppercase bold text.
+|     - Interaction:
+|       - Default: A hard, 4px block shadow creates a "popped out" look.
+|       - Hover: The shadow is removed, and the button translates slightly,
+|         signaling it's ready for action.
+|       - Active: The button appears pressed into the page by inverting its
+|         shadow and translating it down and to the right.
+|
+|   - CONTAINERS & CARDS (.section, .Turn):
+|     - Appearance: White or light gray background, 2px solid black border.
+|     - Shadow: A standard 4px hard block shadow to lift them from the page.
+|
+|   - FORM INPUTS (.textarea):
+|     - Appearance: Simple, rectangular fields with a solid 2px border.
+|     - Focus State: The border color changes to the primary action blue to
+|       provide clear, functional feedback. No soft glows or fades.
+|
+|   - TYPOGRAPHY (.title, general text):
+|     - Font: A clean, sans-serif font like Inter or Arial.
+|     - Hierarchy: Titles are uppercase and bold. Body text is regular weight.
+|     - Color: High contrast is key. Black text on white/light backgrounds.
+|
+================================================================================
+*/
+
+/*
+:root - CSS Variables
+Defines the core palette and metrics for the design system.
+*/
+:root {
+    /* Primary Palette */
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-light-gray: #f0f0f0;
+    --color-mid-gray: #888888;
+    --color-dark-gray: #333333;
+
+    /* Accent Palette */
+    --color-action-blue: #007aff;
+    --color-destructive-red: #ff3b30;
+    --color-success-green: #34c759;
+    --color-warning-orange: #ff9500;
+    --color-highlight-purple: #af52de;
+    --color-attention-yellow: #ffcc00;
+
+    /* Spacing & Sizing */
+    --space-unit: 8px;
+    --space-xs: calc(var(--space-unit) * 0.5); /* 4px */
+    --space-sm: var(--space-unit); /* 8px */
+    --space-md: calc(var(--space-unit) * 2); /* 16px */
+    --space-lg: calc(var(--space-unit) * 3); /* 24px */
+    --space-xl: calc(var(--space-unit) * 4); /* 32px */
+
+    /* Borders & Shadows */
+    --border-width: 2px;
+    --border-style: solid var(--color-black);
+    --border-radius: 0;
+    --hard-shadow: 4px 4px 0px var(--color-black);
+    --hard-shadow-inset: inset 4px 4px 0px var(--color-dark-gray);
+
+    /* Fonts */
+    --font-family:
+        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+}
+
+/* Main Layout Components */
+.Page {
+    flex: 1 1 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
+    font-family: var(--font-family);
+}
+
+.sidebar {
+    flex: 0 0 auto;
+    width: 350px;
+
+    background-color: var(--color-light-gray);
+    border-right: var(--border-width) var(--border-style);
+    padding: var(--space-md);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.main {
+    flex: 1 1 0;
+    min-width: 0;
+
+    padding: var(--space-md);
+    overflow-y: auto;
+}
+
+/* Section Styling */
+.section {
+    flex: 1 1 0;
+    min-height: 0;
+
+    background-color: var(--color-white);
+    border: var(--border-width) var(--border-style);
+    box-shadow: var(--hard-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.section > .title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    border-bottom: var(--border-width) var(--border-style);
+    padding: var(--space-md);
+}
+
+.section > .body {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: auto;
+    padding: var(--space-md);
+}
+
+/* Form Elements */
+.textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: var(--space-sm);
+    border: var(--border-width) var(--border-style);
+    border-radius: var(--border-radius);
+    background-color: var(--color-white);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    box-sizing: border-box; /* Important for padding and border */
+    resize: vertical;
+    transition: border-color 0.1s ease-in-out;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: var(--color-action-blue);
+}
+
+/* Generic Button Styling (for the load buttons) */
+.button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: var(--border-width) var(--border-style);
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    font-family: var(--font-family);
+    cursor: pointer;
+    box-shadow: var(--hard-shadow);
+    transition:
+        transform 0.1s ease-in-out,
+        box-shadow 0.1s ease-in-out;
+}
+
+.button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--color-black);
+}
+
+.button:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+/* View Component Layout */
+.View {
+    display: flex;
+    height: 100%;
+    gap: var(--space-md);
+}
+
+.View .sidebar {
+    width: 300px;
+    background-color: var(--color-white);
+    border: var(--border-width) var(--border-style);
+    box-shadow: var(--hard-shadow);
+    padding: var(--space-md);
+    overflow-y: auto;
+}
+
+.View .sidebar pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.chat {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    background-color: var(--color-white);
+    border: var(--border-width) var(--border-style);
+    box-shadow: var(--hard-shadow);
+    padding: var(--space-md);
+}
+
+.history {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--space-sm);
+    background-color: var(--color-light-gray);
+    border: var(--border-width) var(--border-style);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.Turn {
+    background-color: var(--color-white);
+    border: var(--border-width) var(--border-style);
+    padding: var(--space-sm);
+}
+
+.params,
+.actions {
+    background-color: var(--color-light-gray);
+    padding: var(--space-sm);
+    margin-top: var(--space-sm);
+    border: 1px solid var(--color-mid-gray);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: "Courier New", Courier, monospace;
+}
+
+.params {
+    border-left: 4px solid var(--color-action-blue);
+}
+
+.actions {
+    border-left: 4px solid var(--color-success-green);
+}
+
+.input {
+    flex-shrink: 0;
+}
+
+.input .textarea {
+    min-height: 80px;
+}

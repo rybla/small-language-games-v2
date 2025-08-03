@@ -1,18 +1,13 @@
 import { ai } from "@/ai";
+import { match } from "@/utility";
 import { z } from "genkit";
 import {
-  ConvoTreeEdge,
   NpcState,
   NpcStateDiffs,
   NpcStatePredicateRow,
-  NpcStatePredicates as NpcStatePredicates,
+  NpcStatePredicates,
   State,
 } from "./common";
-import {
-  getConvoTreeEdgesFromNode,
-  getCurrentConvoTreeNode,
-} from "./semantics";
-import { match } from "@/utility";
 
 export const InterpretNpcStatePredicates = ai.defineFlow(
   {

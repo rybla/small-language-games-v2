@@ -1,0 +1,774 @@
+{
+  "metadata": {
+    "id": "09a00cad-c560-4fab-b72f-262588f16397",
+    "name": "09a00cad-c560-4fab-b72f-262588f16397",
+    "creationDate": 1754248854625
+  },
+  "initialState": {
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "the sky is blue"
+            }
+          ],
+          "diffs": []
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "facts": []
+    }
+  },
+  "state": {
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "the sky is blue"
+            }
+          ],
+          "diffs": []
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "facts": []
+    }
+  },
+  "turns": [
+    {
+      "actions": [
+        {
+          "type": "chat",
+          "response": "hello world",
+          "diffs": []
+        }
+      ],
+      "view": {
+        "metadata": {
+          "id": "09a00cad-c560-4fab-b72f-262588f16397",
+          "name": "09a00cad-c560-4fab-b72f-262588f16397",
+          "creationDate": 1754248854625
+        },
+        "view": {
+          "state": {
+            "currentId": "node1",
+            "convoTree": {
+              "root": "node1",
+              "nodes": {
+                "node1": {
+                  "id": "node1"
+                },
+                "node2": {
+                  "id": "node2"
+                }
+              },
+              "edges": {
+                "edge1": {
+                  "id": "edge1",
+                  "sourceId": "node1",
+                  "targetId": "node2",
+                  "preds": [
+                    {
+                      "type": "knowsFact",
+                      "fact": "the sky is blue"
+                    }
+                  ],
+                  "diffs": []
+                }
+              }
+            },
+            "npcState": {
+              "name": "Benny",
+              "facts": []
+            }
+          },
+          "turns": []
+        }
+      },
+      "params": {
+        "prompt": "a\na\na\na"
+      },
+      "state": {
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the sky is blue"
+                }
+              ],
+              "diffs": []
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "facts": []
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "chat",
+          "response": "hello world",
+          "diffs": []
+        }
+      ],
+      "view": {
+        "metadata": {
+          "id": "09a00cad-c560-4fab-b72f-262588f16397",
+          "name": "09a00cad-c560-4fab-b72f-262588f16397",
+          "creationDate": 1754248854625
+        },
+        "view": {
+          "state": {
+            "currentId": "node1",
+            "convoTree": {
+              "root": "node1",
+              "nodes": {
+                "node1": {
+                  "id": "node1"
+                },
+                "node2": {
+                  "id": "node2"
+                }
+              },
+              "edges": {
+                "edge1": {
+                  "id": "edge1",
+                  "sourceId": "node1",
+                  "targetId": "node2",
+                  "preds": [
+                    {
+                      "type": "knowsFact",
+                      "fact": "the sky is blue"
+                    }
+                  ],
+                  "diffs": []
+                }
+              }
+            },
+            "npcState": {
+              "name": "Benny",
+              "facts": []
+            }
+          },
+          "turns": [
+            {
+              "params": {
+                "prompt": "a\na\na\na"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "params": {
+        "prompt": "a"
+      },
+      "state": {
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the sky is blue"
+                }
+              ],
+              "diffs": []
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "facts": []
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "chat",
+          "response": "hello world",
+          "diffs": []
+        }
+      ],
+      "view": {
+        "metadata": {
+          "id": "09a00cad-c560-4fab-b72f-262588f16397",
+          "name": "09a00cad-c560-4fab-b72f-262588f16397",
+          "creationDate": 1754248854625
+        },
+        "view": {
+          "state": {
+            "currentId": "node1",
+            "convoTree": {
+              "root": "node1",
+              "nodes": {
+                "node1": {
+                  "id": "node1"
+                },
+                "node2": {
+                  "id": "node2"
+                }
+              },
+              "edges": {
+                "edge1": {
+                  "id": "edge1",
+                  "sourceId": "node1",
+                  "targetId": "node2",
+                  "preds": [
+                    {
+                      "type": "knowsFact",
+                      "fact": "the sky is blue"
+                    }
+                  ],
+                  "diffs": []
+                }
+              }
+            },
+            "npcState": {
+              "name": "Benny",
+              "facts": []
+            }
+          },
+          "turns": [
+            {
+              "params": {
+                "prompt": "a\na\na\na"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "params": {
+        "prompt": "a"
+      },
+      "state": {
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the sky is blue"
+                }
+              ],
+              "diffs": []
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "facts": []
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "chat",
+          "response": "hello world",
+          "diffs": []
+        }
+      ],
+      "view": {
+        "metadata": {
+          "id": "09a00cad-c560-4fab-b72f-262588f16397",
+          "name": "09a00cad-c560-4fab-b72f-262588f16397",
+          "creationDate": 1754248854625
+        },
+        "view": {
+          "state": {
+            "currentId": "node1",
+            "convoTree": {
+              "root": "node1",
+              "nodes": {
+                "node1": {
+                  "id": "node1"
+                },
+                "node2": {
+                  "id": "node2"
+                }
+              },
+              "edges": {
+                "edge1": {
+                  "id": "edge1",
+                  "sourceId": "node1",
+                  "targetId": "node2",
+                  "preds": [
+                    {
+                      "type": "knowsFact",
+                      "fact": "the sky is blue"
+                    }
+                  ],
+                  "diffs": []
+                }
+              }
+            },
+            "npcState": {
+              "name": "Benny",
+              "facts": []
+            }
+          },
+          "turns": [
+            {
+              "params": {
+                "prompt": "a\na\na\na"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "params": {
+        "prompt": "a"
+      },
+      "state": {
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the sky is blue"
+                }
+              ],
+              "diffs": []
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "facts": []
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "chat",
+          "response": "hello world",
+          "diffs": []
+        }
+      ],
+      "view": {
+        "metadata": {
+          "id": "09a00cad-c560-4fab-b72f-262588f16397",
+          "name": "09a00cad-c560-4fab-b72f-262588f16397",
+          "creationDate": 1754248854625
+        },
+        "view": {
+          "state": {
+            "currentId": "node1",
+            "convoTree": {
+              "root": "node1",
+              "nodes": {
+                "node1": {
+                  "id": "node1"
+                },
+                "node2": {
+                  "id": "node2"
+                }
+              },
+              "edges": {
+                "edge1": {
+                  "id": "edge1",
+                  "sourceId": "node1",
+                  "targetId": "node2",
+                  "preds": [
+                    {
+                      "type": "knowsFact",
+                      "fact": "the sky is blue"
+                    }
+                  ],
+                  "diffs": []
+                }
+              }
+            },
+            "npcState": {
+              "name": "Benny",
+              "facts": []
+            }
+          },
+          "turns": [
+            {
+              "params": {
+                "prompt": "a\na\na\na"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "params": {
+        "prompt": "a\n"
+      },
+      "state": {
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the sky is blue"
+                }
+              ],
+              "diffs": []
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "facts": []
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "chat",
+          "response": "hello world",
+          "diffs": []
+        }
+      ],
+      "view": {
+        "metadata": {
+          "id": "09a00cad-c560-4fab-b72f-262588f16397",
+          "name": "09a00cad-c560-4fab-b72f-262588f16397",
+          "creationDate": 1754248854625
+        },
+        "view": {
+          "state": {
+            "currentId": "node1",
+            "convoTree": {
+              "root": "node1",
+              "nodes": {
+                "node1": {
+                  "id": "node1"
+                },
+                "node2": {
+                  "id": "node2"
+                }
+              },
+              "edges": {
+                "edge1": {
+                  "id": "edge1",
+                  "sourceId": "node1",
+                  "targetId": "node2",
+                  "preds": [
+                    {
+                      "type": "knowsFact",
+                      "fact": "the sky is blue"
+                    }
+                  ],
+                  "diffs": []
+                }
+              }
+            },
+            "npcState": {
+              "name": "Benny",
+              "facts": []
+            }
+          },
+          "turns": [
+            {
+              "params": {
+                "prompt": "a\na\na\na"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            },
+            {
+              "params": {
+                "prompt": "a\n"
+              },
+              "actions": [
+                {
+                  "type": "chat",
+                  "response": "hello world",
+                  "diffs": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "params": {
+        "prompt": "a"
+      },
+      "state": {
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "the sky is blue"
+                }
+              ],
+              "diffs": []
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "facts": []
+        }
+      }
+    }
+  ]
+}

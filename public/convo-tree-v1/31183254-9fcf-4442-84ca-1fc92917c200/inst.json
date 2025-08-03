@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "id": "31183254-9fcf-4442-84ca-1fc92917c200",
+    "name": "31183254-9fcf-4442-84ca-1fc92917c200",
+    "creationDate": 1754248852158
+  },
+  "initialState": {
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "the sky is blue"
+            }
+          ],
+          "diffs": []
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "facts": []
+    }
+  },
+  "state": {
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "the sky is blue"
+            }
+          ],
+          "diffs": []
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "facts": []
+    }
+  },
+  "turns": []
+}

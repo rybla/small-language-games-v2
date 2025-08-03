@@ -45,25 +45,31 @@ export default function Page() {
       <div className={styles.sidebar}>
         <div className={styles.section}>
           <div className={styles.title}>New</div>
-          <textarea
-            className={styles.textarea}
-            onKeyDown={(event) => {
-              if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-                event.preventDefault();
-                const params: S["params_initialize"] = {
-                  prompt: event.currentTarget.value,
-                };
-                event.currentTarget.value = "";
-                void submitInitializationParams(params);
-              }
-            }}
-          />
+          <div className={styles.body}>
+            <textarea
+              className={styles.textarea}
+              onKeyDown={(event) => {
+                if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+                  event.preventDefault();
+                  const params: S["params_initialize"] = {
+                    prompt: event.currentTarget.value,
+                  };
+                  event.currentTarget.value = "";
+                  void submitInitializationParams(params);
+                }
+              }}
+            />
+          </div>
         </div>
         <div className={styles.section}>
           <div className={styles.title}>Load</div>
-          <div>
+          <div className={styles.body}>
             {instMetadatas.map((md, i) => (
-              <button onClick={() => void loadInst(md.id)} key={i}>
+              <button
+                className={styles.button}
+                onClick={() => void loadInst(md.id)}
+                key={i}
+              >
                 <div>
                   <div>{`name: ${md.name}`}</div>
                   <div>{`id: ${md.id}`}</div>
@@ -100,19 +106,31 @@ function ViewComponent(props: {
         <pre>{stringify(props.inst.metadata)}</pre>
       </div>
       <div className={styles.chat}>
-        <textarea
-          className={styles.textarea}
-          onKeyDown={(event) => {
-            if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-              event.preventDefault();
-              const params: S["params_action"] = {
-                prompt: event.currentTarget.value,
-              };
-              event.currentTarget.value = "";
-              void props.submitActionParams(params);
-            }
-          }}
-        />
+        <div>History</div>
+        <div className={styles.history}>
+          {props.inst.view.turns.map((turn, i) => (
+            <div className={styles.Turn} key={i}>
+              <div className={styles.params}>{stringify(turn.params)}</div>
+              <div className={styles.actions}>{stringify(turn.actions)}</div>
+            </div>
+          ))}
+        </div>
+        <div>Input</div>
+        <div className={styles.input}>
+          <textarea
+            className={styles.textarea}
+            onKeyDown={(event) => {
+              if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+                event.preventDefault();
+                const params: S["params_action"] = {
+                  prompt: event.currentTarget.value,
+                };
+                event.currentTarget.value = "";
+                void props.submitActionParams(params);
+              }
+            }}
+          />
+        </div>
       </div>
     </div>
   );

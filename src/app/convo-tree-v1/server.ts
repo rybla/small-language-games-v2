@@ -9,6 +9,7 @@ import {
   getConvoTreeEdge,
   getConvoTreeEdgesFromNode,
   getCurrentConvoTreeNode,
+  runNpcStateDiff as runNpcStateDiffs,
 } from "./semantics";
 
 const spec: Spec<S> = {
@@ -46,7 +47,10 @@ const spec: Spec<S> = {
   async view(metadata, turns, state) {
     return {
       state,
-      turns,
+      turns: turns.map((turn) => ({
+        params: turn.params,
+        actions: turn.actions,
+      })),
     };
   },
   async generateActions(state, params) {
@@ -75,7 +79,7 @@ const spec: Spec<S> = {
         state.currentId = edge.targetId;
       },
       async chat(x) {
-        // pass
+        await runNpcStateDiffs(x.diffs, state.npcState);
       },
     });
   },
