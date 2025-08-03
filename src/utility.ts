@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+export type TODO = never;
+
 export type Domain<T> = T extends (x: infer A, ...xs: any[]) => any ? A : never;
 export type Domains<T> = T extends (...xs: infer A) => any ? A : never;
 
@@ -172,7 +174,7 @@ export function isOk<E extends object, A extends object>(
   return result.type === "ok";
 }
 
-export function TODO(msg?: string): any {
+export function TODO<A>(msg?: string): A {
   throw new Error(`TODO${msg === undefined ? "" : ` ${msg}`}`);
 }
 

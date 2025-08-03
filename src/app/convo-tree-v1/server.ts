@@ -4,22 +4,22 @@
 
 import { Endpoint, Spec } from "@/library/sva";
 import { Server } from "@/library/sva-server";
-import { Codomain, Domains } from "@/utility";
+import { Codomain, Domains, TODO } from "@/utility";
 import { S, name } from "./common";
 
 const spec: Spec<S> = {
   name,
   async initializeState(metadata, params) {
-    return { counter: 0 };
+    return TODO();
   },
   async view(metadata, turns, state) {
-    return {}; // TODO
+    return TODO();
   },
   async generateActions(state, params) {
-    return []; //TODO
+    return TODO();
   },
   async interpretAction(state, params, action) {
-    return; // TODO
+    return TODO();
   },
 };
 
