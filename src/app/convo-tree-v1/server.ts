@@ -13,17 +13,13 @@ const spec: Spec<S> = {
     return { counter: 0 };
   },
   async view(metadata, turns, state) {
-    return {
-      prompts: turns.flatMap((turn) =>
-        turn.actions.map((action) => action.prompt),
-      ),
-    };
+    return {}; // TODO
   },
   async generateActions(state, params) {
-    return [{ prompt: params.prompt }];
+    return []; //TODO
   },
   async interpretAction(state, params, action) {
-    state.counter++;
+    return; // TODO
   },
 };
 
