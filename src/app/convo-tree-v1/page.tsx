@@ -43,7 +43,7 @@ export default function Page() {
   return (
     <div className={styles.Page}>
       <div className={styles.sidebar}>
-        <div className={styles.section}>
+        <div className={`${styles.section} ${styles.new}`}>
           <div className={styles.title}>New</div>
           <div className={styles.body}>
             <textarea
@@ -61,7 +61,7 @@ export default function Page() {
             />
           </div>
         </div>
-        <div className={styles.section}>
+        <div className={`${styles.section} ${styles.load}`}>
           <div className={styles.title}>Load</div>
           <div className={styles.body}>
             {instMetadatas.map((md, i) => (
@@ -101,15 +101,21 @@ function ViewComponent(props: {
   submitActionParams: (params: S["params_action"]) => Promise<void>;
 }) {
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const turnsBottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (nameInputRef.current === null) return;
     nameInputRef.current.value = props.inst.metadata.name;
   }, [props.inst]);
 
+  useEffect(() => {
+    if (turnsBottomRef.current === null) return;
+    turnsBottomRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [props.inst.view.turns]);
+
   return (
     <div className={styles.View}>
-      <div className={styles.sidebar}>
+      <div className={styles.metadata}>
         <div className={styles.name}>
           <div className={styles.label}>name</div>
           <input
@@ -133,6 +139,7 @@ function ViewComponent(props: {
               <div className={styles.actions}>{stringify(turn.actions)}</div>
             </div>
           ))}
+          <div ref={turnsBottomRef} />
         </div>
         <div>Input</div>
         <div className={styles.input}>
