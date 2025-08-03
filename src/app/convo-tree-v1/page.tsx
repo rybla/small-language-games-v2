@@ -64,19 +64,20 @@ export default function Page() {
         <div className={`${styles.section} ${styles.load}`}>
           <div className={styles.title}>Load</div>
           <div className={styles.body}>
-            {instMetadatas.map((md, i) => (
-              <button
-                className={styles.button}
-                onClick={() => void loadInst(md.id)}
-                key={i}
-              >
-                <div>
-                  <div>{`name: ${md.name}`}</div>
-                  <div>{`id: ${md.id}`}</div>
-                  <div>{`creationDate: ${formatDate(new Date(md.creationDate))}`}</div>
-                </div>
-              </button>
-            ))}
+            {instMetadatas
+              .toSorted((m1, m2) => m2.creationDate - m1.creationDate)
+              .map((md, i) => (
+                <button
+                  className={styles.button}
+                  onClick={() => void loadInst(md.id)}
+                  key={i}
+                >
+                  <div>
+                    <div>{`name: ${md.name}`}</div>
+                    <div>{`creationDate: ${formatDate(new Date(md.creationDate))}`}</div>
+                  </div>
+                </button>
+              ))}
           </div>
         </div>
       </div>
