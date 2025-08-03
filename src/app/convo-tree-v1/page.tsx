@@ -1,13 +1,13 @@
 "use client";
 
 import { ClientInst, InstMetadata } from "@/library/sva";
-import { ReactNode, useEffect, useRef, useState } from "react";
-import { ActionRow, S } from "./common";
-import * as server from "./server";
-import styles from "./page.module.css";
-import { formatDate, match, stringify } from "@/utility";
-import { describeNpcState } from "./semantics";
+import { formatDate } from "@/utility";
+import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
+import { S } from "./common";
+import styles from "./page.module.css";
+import { describeNpcState } from "./semantics";
+import * as server from "./server";
 
 export default function Page() {
   const [instMetadatas, set_instMetadatas] = useState<InstMetadata[]>([]);
@@ -134,9 +134,6 @@ function ViewComponent(props: {
         </div>
         <div className={styles.npcState}>
           <div className={styles.title}>npcState</div>
-          {/*<pre className={styles.pre}>
-            {stringify(props.inst.view.state.npcState)}
-          </pre>*/}
           <div className={styles.pre}>
             <Markdown>
               {describeNpcState(props.inst.view.state.npcState)}
@@ -147,53 +144,35 @@ function ViewComponent(props: {
       <div className={styles.chat}>
         <div className={styles.title}>History</div>
         <div className={styles.history}>
-          {props.inst.view.turns.map((turn, i) => (
+          {props.inst.view.state.turns.map((turn, i) => (
             <div className={styles.Turn} key={i}>
               <div className={styles.prompt}>{turn.params.prompt}</div>
-              {turn.actions.map((action, i) =>
-                match<ActionRow, ReactNode>(action, {
-                  respond: (x) => (
-                    <div
-                      className={`${styles.action} ${styles.response}`}
-                      key={i}
-                    >
-                      {x.response}
-                    </div>
-                  ),
-                  followEdge: (x) => (
-                    <div
-                      className={`${styles.action} ${styles.followEdge}`}
-                      key={i}
-                    >
-                      {x.edgeId}
-                    </div>
-                  ),
-                  diffs: (x) => (
-                    <div className={`${styles.action} ${styles.diffs}`} key={i}>
-                      {stringify(x.diffs)}
-                    </div>
-                  ),
-                }),
-              )}
+              <div className={`${styles.action} ${styles.response}`}>
+                {turn.response}
+              </div>
             </div>
           ))}
           <div ref={turnsBottomRef} />
         </div>
         <div className={styles.title}>Input</div>
         <div className={styles.input}>
-          <textarea
-            className={styles.textarea}
-            onKeyDown={(event) => {
-              if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-                event.preventDefault();
-                const params: S["params_action"] = {
-                  prompt: event.currentTarget.value,
-                };
-                event.currentTarget.value = "";
-                void props.submitActionParams(params);
-              }
-            }}
-          />
+          {props.inst.view.state.npcState.objectives.length > 0 ? (
+            <textarea
+              className={styles.textarea}
+              onKeyDown={(event) => {
+                if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+                  event.preventDefault();
+                  const params: S["params_action"] = {
+                    prompt: event.currentTarget.value,
+                  };
+                  event.currentTarget.value = "";
+                  void props.submitActionParams(params);
+                }
+              }}
+            />
+          ) : (
+            <div>{"The NPC has completed all of it's objecive."}</div>
+          )}
         </div>
       </div>
     </div>

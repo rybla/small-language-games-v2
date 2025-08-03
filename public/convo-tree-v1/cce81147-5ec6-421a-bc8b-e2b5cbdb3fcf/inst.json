@@ -1,0 +1,853 @@
+{
+  "metadata": {
+    "id": "cce81147-5ec6-421a-bc8b-e2b5cbdb3fcf",
+    "name": "cce81147-5ec6-421a-bc8b-e2b5cbdb3fcf",
+    "creationDate": 1754263199862
+  },
+  "initialState": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "Hello"
+        },
+        "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+      },
+      {
+        "params": {
+          "prompt": "I agree to buy a slice of the Margherita pizza"
+        },
+        "response": "Excellent choice! You won't regret it. Coming right up!"
+      },
+      {
+        "params": {
+          "prompt": "great"
+        },
+        "response": "So, while that's baking, have you ever tried our homemade gnocchi? It's divine."
+      },
+      {
+        "params": {
+          "prompt": "No thanks "
+        },
+        "response": "Ah, fair enough. But you know, a light, fresh salad really complements the richness of the Margherita. We have a fantastic Caesar with homemade croutons. What do you say?"
+      },
+      {
+        "params": {
+          "prompt": "I'll buy the caesar salad too"
+        },
+        "response": "Fantastic! You've got excellent taste. One Margherita and one Caesar salad coming right up."
+      },
+      {
+        "params": {
+          "prompt": "great"
+        },
+        "response": "Is there anything else I can tempt you with today? A glass of our house red perhaps? It pairs beautifully with the pizza."
+      }
+    ],
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "Benny owns a restaurant.",
+        "The user agreed to buy a slice of the Margherita pizza.",
+        "The user confirmed their previous agreement to buy a slice of the Margherita pizza.",
+        "The user agreed to buy a caesar salad."
+      ],
+      "mood": "neutral",
+      "objectives": []
+    },
+    "currentId": "done",
+    "convoTree": {
+      "root": "sellingPizza",
+      "nodes": {
+        "sellingPizza": {
+          "id": "sellingPizza"
+        },
+        "sellingSalad": {
+          "id": "sellingSalad"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "sellPizza": {
+          "id": "sellPizza",
+          "sourceId": "sellingPizza",
+          "targetId": "sellingSalad",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a pizza."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+            },
+            {
+              "type": "addObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        },
+        "sellSalad": {
+          "id": "sellSalad",
+          "sourceId": "sellingSalad",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a salad."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "state": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "Hello"
+        },
+        "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+      },
+      {
+        "params": {
+          "prompt": "I agree to buy a slice of the Margherita pizza"
+        },
+        "response": "Excellent choice! You won't regret it. Coming right up!"
+      },
+      {
+        "params": {
+          "prompt": "great"
+        },
+        "response": "So, while that's baking, have you ever tried our homemade gnocchi? It's divine."
+      },
+      {
+        "params": {
+          "prompt": "No thanks "
+        },
+        "response": "Ah, fair enough. But you know, a light, fresh salad really complements the richness of the Margherita. We have a fantastic Caesar with homemade croutons. What do you say?"
+      },
+      {
+        "params": {
+          "prompt": "I'll buy the caesar salad too"
+        },
+        "response": "Fantastic! You've got excellent taste. One Margherita and one Caesar salad coming right up."
+      },
+      {
+        "params": {
+          "prompt": "great"
+        },
+        "response": "Is there anything else I can tempt you with today? A glass of our house red perhaps? It pairs beautifully with the pizza."
+      }
+    ],
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "Benny owns a restaurant.",
+        "The user agreed to buy a slice of the Margherita pizza.",
+        "The user confirmed their previous agreement to buy a slice of the Margherita pizza.",
+        "The user agreed to buy a caesar salad."
+      ],
+      "mood": "neutral",
+      "objectives": []
+    },
+    "currentId": "done",
+    "convoTree": {
+      "root": "sellingPizza",
+      "nodes": {
+        "sellingPizza": {
+          "id": "sellingPizza"
+        },
+        "sellingSalad": {
+          "id": "sellingSalad"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "sellPizza": {
+          "id": "sellPizza",
+          "sourceId": "sellingPizza",
+          "targetId": "sellingSalad",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a pizza."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+            },
+            {
+              "type": "addObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        },
+        "sellSalad": {
+          "id": "sellSalad",
+          "sourceId": "sellingSalad",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a salad."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "turns": [
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "Hello"
+      },
+      "state": {
+        "turns": [],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "Benny owns a restaurant."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+          ]
+        },
+        "currentId": "sellingPizza",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Excellent choice! You won't regret it. Coming right up!"
+        },
+        {
+          "type": "diffs",
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "The user agreed to buy a slice of the Margherita pizza."
+            }
+          ]
+        }
+      ],
+      "params": {
+        "prompt": "I agree to buy a slice of the Margherita pizza"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "Hello"
+            },
+            "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+          }
+        ],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "Benny owns a restaurant."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+          ]
+        },
+        "currentId": "sellingPizza",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "followEdge",
+          "edgeId": "sellPizza"
+        },
+        {
+          "type": "respond",
+          "response": "So, while that's baking, have you ever tried our homemade gnocchi? It's divine."
+        },
+        {
+          "type": "diffs",
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "The user confirmed their previous agreement to buy a slice of the Margherita pizza."
+            }
+          ]
+        }
+      ],
+      "params": {
+        "prompt": "great"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "Hello"
+            },
+            "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+          },
+          {
+            "params": {
+              "prompt": "I agree to buy a slice of the Margherita pizza"
+            },
+            "response": "Excellent choice! You won't regret it. Coming right up!"
+          }
+        ],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "Benny owns a restaurant.",
+            "The user agreed to buy a slice of the Margherita pizza."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+          ]
+        },
+        "currentId": "sellingPizza",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Ah, fair enough. But you know, a light, fresh salad really complements the richness of the Margherita. We have a fantastic Caesar with homemade croutons. What do you say?"
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "No thanks "
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "Hello"
+            },
+            "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+          },
+          {
+            "params": {
+              "prompt": "I agree to buy a slice of the Margherita pizza"
+            },
+            "response": "Excellent choice! You won't regret it. Coming right up!"
+          },
+          {
+            "params": {
+              "prompt": "great"
+            },
+            "response": "So, while that's baking, have you ever tried our homemade gnocchi? It's divine."
+          }
+        ],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "Benny owns a restaurant.",
+            "The user agreed to buy a slice of the Margherita pizza.",
+            "The user confirmed their previous agreement to buy a slice of the Margherita pizza."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+          ]
+        },
+        "currentId": "sellingSalad",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Fantastic! You've got excellent taste. One Margherita and one Caesar salad coming right up."
+        },
+        {
+          "type": "diffs",
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "The user agreed to buy a caesar salad."
+            }
+          ]
+        }
+      ],
+      "params": {
+        "prompt": "I'll buy the caesar salad too"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "Hello"
+            },
+            "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+          },
+          {
+            "params": {
+              "prompt": "I agree to buy a slice of the Margherita pizza"
+            },
+            "response": "Excellent choice! You won't regret it. Coming right up!"
+          },
+          {
+            "params": {
+              "prompt": "great"
+            },
+            "response": "So, while that's baking, have you ever tried our homemade gnocchi? It's divine."
+          },
+          {
+            "params": {
+              "prompt": "No thanks "
+            },
+            "response": "Ah, fair enough. But you know, a light, fresh salad really complements the richness of the Margherita. We have a fantastic Caesar with homemade croutons. What do you say?"
+          }
+        ],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "Benny owns a restaurant.",
+            "The user agreed to buy a slice of the Margherita pizza.",
+            "The user confirmed their previous agreement to buy a slice of the Margherita pizza."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+          ]
+        },
+        "currentId": "sellingSalad",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "followEdge",
+          "edgeId": "sellSalad"
+        },
+        {
+          "type": "respond",
+          "response": "Is there anything else I can tempt you with today? A glass of our house red perhaps? It pairs beautifully with the pizza."
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "great"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "Hello"
+            },
+            "response": "Hey there! Welcome to my restaurant. What can I get for you today? Maybe a slice of our famous Margherita pizza?"
+          },
+          {
+            "params": {
+              "prompt": "I agree to buy a slice of the Margherita pizza"
+            },
+            "response": "Excellent choice! You won't regret it. Coming right up!"
+          },
+          {
+            "params": {
+              "prompt": "great"
+            },
+            "response": "So, while that's baking, have you ever tried our homemade gnocchi? It's divine."
+          },
+          {
+            "params": {
+              "prompt": "No thanks "
+            },
+            "response": "Ah, fair enough. But you know, a light, fresh salad really complements the richness of the Margherita. We have a fantastic Caesar with homemade croutons. What do you say?"
+          },
+          {
+            "params": {
+              "prompt": "I'll buy the caesar salad too"
+            },
+            "response": "Fantastic! You've got excellent taste. One Margherita and one Caesar salad coming right up."
+          }
+        ],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "Benny owns a restaurant.",
+            "The user agreed to buy a slice of the Margherita pizza.",
+            "The user confirmed their previous agreement to buy a slice of the Margherita pizza.",
+            "The user agreed to buy a caesar salad."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+          ]
+        },
+        "currentId": "sellingSalad",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

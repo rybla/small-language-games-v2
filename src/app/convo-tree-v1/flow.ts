@@ -24,33 +24,37 @@ export const InterpretNpcStatePredicates = ai.defineFlow(
     for (const p of preds) {
       await match<NpcStatePredicateRow, Promise<void>>(p, {
         async knowsFact(x) {
-          // TODO: instead do LLM query
-
           const { knowsFact } = getValidOutput(
             await ai.generate({
               model: model.text_speed,
               system: [
                 makeTextPart(
                   trim(`
-You are playing a role-playing game with the user. Your character is described as follows:
+You are an assistant to the user who is game-master for a role-playing game. The user will as you for some help with a question pertaining to an ongoing game.
+                `),
+                ),
+              ],
+              prompt: [
+                makeTextPart(
+                  trim(`
+In the current game, there is a character with the following description:
 
-${indent(describeNpcState(state))}
+${indent(describeNpcState(state, { omitObjectives: true }))}
 
-Your task as the moment is to decide if the character you are playing as is aware of a particular fact. The user will provide the fact in question, and you should response with \`true\` if your character knows that fact, or \`false\` if your character does not know that fact.
+Based on just this information, does ${state.name} probably know that "${x.fact}"?
 `),
                 ),
               ],
-              prompt: [makeTextPart(x.fact)],
               output: {
                 schema: z.object({
                   knowsFact: z
-                    .boolean()
-                    .describe("Whether or not the character knows the fact"),
+                    .enum(["Yes", "No"])
+                    .describe(`Whether or not ${state.name} knows the fact`),
                 }),
               },
             } satisfies GenerateOptions),
           );
-          if (!knowsFact) result = false;
+          if (knowsFact === "No") result = false;
         },
       });
       if (!result) break;
@@ -59,38 +63,18 @@ Your task as the moment is to decide if the character you are playing as is awar
   },
 );
 
-export const GenerateNpcResponse = ai.defineFlow(
+export const GenerateNpcStateDiffs = ai.defineFlow(
   {
-    name: "GenerateNpcResponse",
+    name: "GenerateNpcStateDiffs",
     inputSchema: z.object({
       state: State,
       prompt: z.string(),
     }),
     outputSchema: z.object({
-      response: z.string(),
       diffs: NpcStateDiffs,
     }),
   },
   async ({ state, prompt }) => {
-    const response = await ai.generate({
-      model: model.text_speed,
-      system: [
-        makeTextPart(
-          trim(`
-You are playing a role-playing game with the user. Your character is described as follows:
-
-${indent(describeNpcState(state.npcState))}
-
-Make sure to carefully take into account your character description.
-
-Your task is to have a natural conversation with the user while staying in-character. Your response should be short, like in a real-time conversation.
-`),
-        ),
-      ],
-      messages: fromStateToMessages(state),
-      prompt: makeTextPart(prompt),
-    } satisfies GenerateOptions);
-
     const { facts } = getValidOutput(
       await ai.generate({
         model: model.text_speed,
@@ -101,12 +85,10 @@ You are playing a role-playing game with the user. Your character is described a
 
 ${indent(describeNpcState(state.npcState))}
 
-The user will send you a chat message. Your task is to consider the chat message and extract any new information you've learned about the user.
+The user will send you a chat message. Your task is to consider the chat message and extract any new information you've learned about the user. Any piece of information could be useful.
 
 You already know the following facts about the user:
-${bullets(state.npcState.facts)}
-
-So, only report _new_ facts that you've learned from the single chat message.
+${indent(bullets(state.npcState.facts))}
 `),
           ),
         ],
@@ -122,13 +104,49 @@ So, only report _new_ facts that you've learned from the single chat message.
     );
 
     return {
-      response: response.text,
       diffs: [
         facts.map((fact) => ({
           type: "learnFact",
           fact: fact,
         })) satisfies NpcStateDiffs,
       ].flat(),
+    };
+  },
+);
+
+export const GenerateNpcResponse = ai.defineFlow(
+  {
+    name: "GenerateNpcResponse",
+    inputSchema: z.object({
+      state: State,
+      prompt: z.string(),
+    }),
+    outputSchema: z.object({
+      response: z.string(),
+    }),
+  },
+  async ({ state, prompt }) => {
+    const response = await ai.generate({
+      model: model.text_speed,
+      system: [
+        makeTextPart(
+          trim(`
+You are playing a role-playing game with the user. Your task is to have a natural conversation with the user while staying in-character. Your response should be short, like in a real-time conversation.
+
+Your character is described as follows:
+
+${indent(describeNpcState(state.npcState))}
+
+In conversation, you must complete your objectives.
+`),
+        ),
+      ],
+      messages: fromStateToMessages(state),
+      prompt: makeTextPart(prompt),
+    } satisfies GenerateOptions);
+
+    return {
+      response: response.text,
     };
   },
 );

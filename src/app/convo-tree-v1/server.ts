@@ -1,53 +1,93 @@
 "use server";
 
-import { Endpoint, Spec } from "@/library/sva";
+import { Endpoint, InstMetadata, Spec } from "@/library/sva";
 import { Server } from "@/library/sva-server";
 import { Codomain, Domains, match } from "@/utility";
-import { Action, ActionRow, ConvoTree, name, S } from "./common";
+import { ActionRow, ConvoTree, name, NpcState, S, State } from "./common";
 import * as flow from "./flow";
 import {
-  getConvoTreeEdge,
   getConvoTreeEdgesFromNode,
   getCurrentConvoTreeNode,
+  runNpcStateDiff,
   runNpcStateDiff as runNpcStateDiffs,
 } from "./semantics";
 
+// -----------------------------------------------------------------------------
+// initializeState
+// -----------------------------------------------------------------------------
+
+async function initializeState_sellPizzaAndSalad(
+  metadata: InstMetadata,
+  params: S["params_initialize"],
+): Promise<State> {
+  const objective_sellPizza =
+    "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza.";
+  const objective_sellSalad =
+    "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad.";
+
+  const npcState: NpcState = {
+    name: "Benny",
+    description: "Benny is a professional chef with a passion for cooking.",
+    facts: ["Benny owns a restaurant."],
+    mood: "neutral",
+    objectives: [objective_sellPizza],
+  };
+
+  const nodes = {
+    sellingPizza: { id: "sellingPizza" },
+    sellingSalad: { id: "sellingSalad" },
+    done: { id: "done" },
+  } satisfies ConvoTree["nodes"];
+
+  const edges = {
+    sellPizza: {
+      id: "sellPizza",
+      sourceId: nodes.sellingPizza.id,
+      targetId: nodes.sellingSalad.id,
+      preds: [
+        {
+          type: "knowsFact",
+          fact: "The user has agreed to buy a pizza.",
+        },
+      ],
+      diffs: [
+        { type: "completeObjective", objective: objective_sellPizza },
+        { type: "addObjective", objective: objective_sellSalad },
+      ],
+    },
+    sellSalad: {
+      id: "sellSalad",
+      sourceId: nodes.sellingSalad.id,
+      targetId: nodes.done.id,
+      preds: [
+        {
+          type: "knowsFact",
+          fact: "The user has agreed to buy a salad.",
+        },
+      ],
+      diffs: [{ type: "completeObjective", objective: objective_sellSalad }],
+    },
+  } satisfies ConvoTree["edges"];
+
+  return {
+    turns: [],
+    npcState: npcState,
+    currentId: nodes.sellingPizza.id,
+    convoTree: {
+      root: nodes.sellingPizza.id,
+      nodes,
+      edges,
+    },
+  } satisfies State;
+}
+
+// -----------------------------------------------------------------------------
+// spec
+// -----------------------------------------------------------------------------
+
 const spec: Spec<S> = {
   name,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async initializeState(metadata, params) {
-    const nodes = {
-      node1: { id: "node1" },
-      node2: { id: "node2" },
-    } satisfies ConvoTree["nodes"];
-
-    const edges = {
-      edge1: {
-        id: "edge1",
-        sourceId: nodes.node1.id,
-        targetId: nodes.node2.id,
-        preds: [{ type: "knowsFact", fact: "the user is a gardener" }],
-        diffs: [{ type: "learnFact", fact: 'the password is "genie123"' }],
-      },
-    } satisfies ConvoTree["edges"];
-
-    return {
-      turns: [],
-      currentId: nodes.node1.id,
-      convoTree: {
-        root: nodes.node1.id,
-        nodes,
-        edges,
-      },
-      npcState: {
-        name: "Benny",
-        description: "Benny is a professional chef with a passion for cooking.",
-        facts: ["I know the best recipe for pizza."],
-        mood: "neutral",
-        objectives: ["I want to convince the user to buy pizzas from me."],
-      },
-    } satisfies S["state"];
-  },
+  initializeState: initializeState_sellPizzaAndSalad,
   async view(metadata, turns, state) {
     return {
       state,
@@ -55,50 +95,37 @@ const spec: Spec<S> = {
     };
   },
   async generateActions(turns, state, params) {
+    return [{ type: "pass" }];
+  },
+  async interpretAction(state, params, action) {
+    const { diffs } = await flow.GenerateNpcStateDiffs({
+      state,
+      prompt: params.prompt,
+    });
+    await runNpcStateDiff(diffs, state.npcState);
+
     const node = getCurrentConvoTreeNode(state);
     const edges = getConvoTreeEdgesFromNode(state.convoTree, node.id);
-    console.log(`[generateActions] edges: ${edges.map((edge) => edge.id)}`);
     for (const edge of edges) {
-      console.log(`[InterpretNpcStatePredicates] considering edge ${edge.id}`);
       const edgeIsSatisfied = await flow.InterpretNpcStatePredicates({
         state: state.npcState,
         preds: edge.preds,
       });
       if (edgeIsSatisfied) {
-        const { response, diffs } = await flow.GenerateNpcResponse({
-          state,
-          prompt: params.prompt,
-        });
-        return [
-          { type: "followEdge", edgeId: edge.id },
-          { type: "respond", response },
-          { type: "diffs", diffs },
-        ] satisfies Action[];
+        state.currentId = edge.targetId;
+        await runNpcStateDiffs(edge.diffs, state.npcState);
       }
     }
-    const { response, diffs } = await flow.GenerateNpcResponse({
+
+    await match<ActionRow, Promise<void>>(action, {
+      async pass(x) {},
+    });
+
+    const { response } = await flow.GenerateNpcResponse({
       state,
       prompt: params.prompt,
     });
-    return [
-      { type: "respond", response },
-      { type: "diffs", diffs },
-    ] satisfies Action[];
-  },
-  async interpretAction(state, params, action) {
-    await match<ActionRow, Promise<void>>(action, {
-      async followEdge(x) {
-        const edge = getConvoTreeEdge(state.convoTree, x.edgeId);
-        state.currentId = edge.targetId;
-        await runNpcStateDiffs(edge.diffs, state.npcState);
-      },
-      async respond(x) {
-        state.turns.push({ params, response: x.response });
-      },
-      async diffs(x) {
-        await runNpcStateDiffs(x.diffs, state.npcState);
-      },
-    });
+    state.turns.push({ params, response });
   },
 };
 

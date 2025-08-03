@@ -1,5 +1,5 @@
-import { Sig } from "@/library/sva";
 import * as sva from "@/library/sva";
+import { Sig } from "@/library/sva";
 import { Subtype, UnionToRecord } from "@/utility";
 import { z } from "genkit";
 
@@ -54,16 +54,10 @@ export type Action = z.infer<typeof Action>;
 export type ActionRow = UnionToRecord<Action>;
 export const Action = z.union([
   z.object({
-    type: z.enum(["followEdge"]),
-    edgeId: z.lazy(() => ConvoTreeEdgeId),
+    type: z.enum(["pass"]),
   }),
   z.object({
-    type: z.enum(["respond"]),
-    response: z.string(),
-  }),
-  z.object({
-    type: z.enum(["diffs"]),
-    diffs: z.lazy(() => NpcStateDiffs),
+    type: z.enum(["pass"]),
   }),
 ]);
 
@@ -118,9 +112,13 @@ export type NpcState = z.infer<typeof NpcState>;
 export const NpcState = z.object({
   name: z.string(),
   description: z.string(),
-  mood: z.string().describe("your current mood"),
-  facts: z.array(z.string()).describe("facts that you know"),
-  objectives: z.array(z.string()).describe("your current objectives"),
+  mood: z.string().describe("a concise description of your current mood"),
+  facts: z
+    .array(z.string())
+    .describe("facts that you know, written in third-person perspective"),
+  objectives: z
+    .array(z.string())
+    .describe("your current objectives, written in first-person perspective"),
 });
 
 export type NpcStateDiffs = z.infer<typeof NpcStateDiffs>;
@@ -129,6 +127,7 @@ export const NpcStateDiffs = z.array(
   z.union([
     z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
     z.object({ type: z.enum(["completeObjective"]), objective: z.string() }),
+    z.object({ type: z.enum(["addObjective"]), objective: z.string() }),
   ]),
 );
 

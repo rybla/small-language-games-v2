@@ -6,8 +6,8 @@ import type {
   ConvoTreeNode,
   ConvoTreeNodeId,
   NpcState,
-  NpcStateDiffs,
   NpcStateDiffRow,
+  NpcStateDiffs,
   State,
 } from "./common";
 
@@ -50,16 +50,24 @@ export async function runNpcStateDiff(ds: NpcStateDiffs, s: NpcState) {
         const i = s.objectives.findIndex((o) => o === x.objective);
         s.objectives.splice(i, 1);
       },
+      async addObjective(x) {
+        s.objectives.push(x.objective);
+      },
     });
   }
 }
 
-export function describeNpcState(s: NpcState): string {
+export function describeNpcState(
+  s: NpcState,
+  opts?: {
+    omitObjectives?: boolean;
+  },
+): string {
   return trim(`
 - Name: ${s.name}
 - Overall description: ${s.description}
 - Current mood: ${s.mood}.
 - Known facts: ${s.facts.length === 0 ? "none" : "\n" + indent(bullets(s.facts))}
-- Current objectives: ${s.objectives.length === 0 ? "none" : "\n" + indent(bullets(s.objectives))}
+${opts?.omitObjectives === true ? "" : `- Current objectives: ${s.objectives.length === 0 ? "none" : "\n" + indent(bullets(s.objectives))}`}
 `);
 }

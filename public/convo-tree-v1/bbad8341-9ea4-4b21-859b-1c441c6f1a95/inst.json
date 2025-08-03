@@ -1,0 +1,371 @@
+{
+  "metadata": {
+    "id": "bbad8341-9ea4-4b21-859b-1c441c6f1a95",
+    "name": "bbad8341-9ea4-4b21-859b-1c441c6f1a95",
+    "creationDate": 1754260899749
+  },
+  "initialState": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hello"
+        },
+        "response": "Hey there! Welcome to Benny's Pizzeria. What can I get for you today? We've got a fresh pizza just coming out of the oven, it smells amazing!"
+      },
+      {
+        "params": {
+          "prompt": "Sure, I'll buy it"
+        },
+        "response": "Fantastic choice! You're going to love it. It's my signature recipe, perfectly crisp crust, rich tomato sauce, and the freshest toppings. I'll box it up for you right away."
+      }
+    ],
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "I know the best recipe for pizza.",
+        "I own a pizza restaurant.",
+        "I have a pizza in the oven that is just about to be done. It's ready to sell.",
+        "I make delicious salads.",
+        "The user wants to buy a pizza from Benny."
+      ],
+      "mood": "neutral",
+      "objectives": [
+        "I want to convince the user to buy a pizza from me."
+      ]
+    },
+    "currentId": "sellingSalad",
+    "convoTree": {
+      "root": "sellingPizza",
+      "nodes": {
+        "sellingPizza": {
+          "id": "sellingPizza"
+        },
+        "sellingSalad": {
+          "id": "sellingSalad"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "sellPizza": {
+          "id": "sellPizza",
+          "sourceId": "sellingPizza",
+          "targetId": "sellingSalad",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a pizza from me."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "I want to convince the user to buy a pizza from me."
+            },
+            {
+              "type": "addObjective",
+              "objective": "I want to convince the user to buy a pizza from me."
+            }
+          ]
+        },
+        "sellSalad": {
+          "id": "sellSalad",
+          "sourceId": "sellingSalad",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a salad from me."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "I want to convince the user to buy a pizza from me."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "state": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hello"
+        },
+        "response": "Hey there! Welcome to Benny's Pizzeria. What can I get for you today? We've got a fresh pizza just coming out of the oven, it smells amazing!"
+      },
+      {
+        "params": {
+          "prompt": "Sure, I'll buy it"
+        },
+        "response": "Fantastic choice! You're going to love it. It's my signature recipe, perfectly crisp crust, rich tomato sauce, and the freshest toppings. I'll box it up for you right away."
+      }
+    ],
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "I know the best recipe for pizza.",
+        "I own a pizza restaurant.",
+        "I have a pizza in the oven that is just about to be done. It's ready to sell.",
+        "I make delicious salads.",
+        "The user wants to buy a pizza from Benny."
+      ],
+      "mood": "neutral",
+      "objectives": [
+        "I want to convince the user to buy a pizza from me."
+      ]
+    },
+    "currentId": "sellingSalad",
+    "convoTree": {
+      "root": "sellingPizza",
+      "nodes": {
+        "sellingPizza": {
+          "id": "sellingPizza"
+        },
+        "sellingSalad": {
+          "id": "sellingSalad"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "sellPizza": {
+          "id": "sellPizza",
+          "sourceId": "sellingPizza",
+          "targetId": "sellingSalad",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a pizza from me."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "I want to convince the user to buy a pizza from me."
+            },
+            {
+              "type": "addObjective",
+              "objective": "I want to convince the user to buy a pizza from me."
+            }
+          ]
+        },
+        "sellSalad": {
+          "id": "sellSalad",
+          "sourceId": "sellingSalad",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a salad from me."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "I want to convince the user to buy a pizza from me."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "turns": [
+    {
+      "actions": [
+        {
+          "type": "followEdge",
+          "edgeId": "sellPizza"
+        },
+        {
+          "type": "respond",
+          "response": "Hey there! Welcome to Benny's Pizzeria. What can I get for you today? We've got a fresh pizza just coming out of the oven, it smells amazing!"
+        },
+        {
+          "type": "diffs",
+          "diffs": []
+        }
+      ],
+      "params": {
+        "prompt": "hello"
+      },
+      "state": {
+        "turns": [],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza.",
+            "I own a pizza restaurant.",
+            "I have a pizza in the oven that is just about to be done. It's ready to sell.",
+            "I make delicious salads."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "I want to convince the user to buy a pizza from me."
+          ]
+        },
+        "currentId": "sellingPizza",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza from me."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "I want to convince the user to buy a pizza from me."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "I want to convince the user to buy a pizza from me."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad from me."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "I want to convince the user to buy a pizza from me."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "respond",
+          "response": "Fantastic choice! You're going to love it. It's my signature recipe, perfectly crisp crust, rich tomato sauce, and the freshest toppings. I'll box it up for you right away."
+        },
+        {
+          "type": "diffs",
+          "diffs": [
+            {
+              "type": "learnFact",
+              "fact": "The user wants to buy a pizza from Benny."
+            }
+          ]
+        }
+      ],
+      "params": {
+        "prompt": "Sure, I'll buy it"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hello"
+            },
+            "response": "Hey there! Welcome to Benny's Pizzeria. What can I get for you today? We've got a fresh pizza just coming out of the oven, it smells amazing!"
+          }
+        ],
+        "npcState": {
+          "name": "Benny",
+          "description": "Benny is a professional chef with a passion for cooking.",
+          "facts": [
+            "I know the best recipe for pizza.",
+            "I own a pizza restaurant.",
+            "I have a pizza in the oven that is just about to be done. It's ready to sell.",
+            "I make delicious salads."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "I want to convince the user to buy a pizza from me."
+          ]
+        },
+        "currentId": "sellingSalad",
+        "convoTree": {
+          "root": "sellingPizza",
+          "nodes": {
+            "sellingPizza": {
+              "id": "sellingPizza"
+            },
+            "sellingSalad": {
+              "id": "sellingSalad"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "sellPizza": {
+              "id": "sellPizza",
+              "sourceId": "sellingPizza",
+              "targetId": "sellingSalad",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a pizza from me."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "I want to convince the user to buy a pizza from me."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "I want to convince the user to buy a pizza from me."
+                }
+              ]
+            },
+            "sellSalad": {
+              "id": "sellSalad",
+              "sourceId": "sellingSalad",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user has agreed to buy a salad from me."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "I want to convince the user to buy a pizza from me."
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
