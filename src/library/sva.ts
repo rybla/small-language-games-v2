@@ -25,6 +25,7 @@ export type Spec<S extends Sig> = {
     state: S["state"],
   ) => Promise<S["view"]>;
   generateActions: (
+    turns: Turn<S>[],
     state: S["state"],
     params: S["params_action"],
   ) => Promise<S["action"][]>;
@@ -46,7 +47,6 @@ export type Inst<S extends Sig> = {
 export type Turn<S extends Sig> = {
   params: S["params_action"];
   state: S["state"];
-  view: S["view"];
   actions: S["action"][];
 };
 

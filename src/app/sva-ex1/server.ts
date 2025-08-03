@@ -19,7 +19,7 @@ const spec: Spec<S> = {
       ),
     };
   },
-  async generateActions(state, params) {
+  async generateActions(turns, state, params) {
     return [{ prompt: params.prompt }];
   },
   async interpretAction(state, params, action) {

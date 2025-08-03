@@ -17,6 +17,7 @@ const spec: Spec<S> = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async initializeState(metadata, params) {
     return {
+      turns: [],
       currentId: "node1",
       convoTree: {
         root: "node1",
@@ -24,36 +25,24 @@ const spec: Spec<S> = {
           node1: {
             id: "node1",
           },
-          node2: {
-            id: "node2",
-          },
         },
-        edges: {
-          edge1: {
-            id: "edge1",
-            sourceId: "node1",
-            targetId: "node2",
-            preds: [{ type: "knowsFact", fact: "the sky is blue" }],
-            diffs: [],
-          },
-        },
+        edges: {},
       },
       npcState: {
         name: "Benny",
-        facts: [],
+        description: "Benny is a professional chef with a passion for cooking.",
+        facts: ["I know the best recipe for pizza."],
+        mood: "neutral",
       },
     } satisfies S["state"];
   },
   async view(metadata, turns, state) {
     return {
       state,
-      turns: turns.map((turn) => ({
-        params: turn.params,
-        actions: turn.actions,
-      })),
+      turns,
     };
   },
-  async generateActions(state, params) {
+  async generateActions(turns, state, params) {
     const node = getCurrentConvoTreeNode(state);
     const edges = getConvoTreeEdgesFromNode(state.convoTree, node.id);
     for (const edge of edges) {
@@ -62,15 +51,25 @@ const spec: Spec<S> = {
         preds: edge.preds,
       });
       if (edgeIsSatisfied) {
-        const { response, diffs } = await flow.GenerateNpcResponse({ state });
+        const { response, diffs } = await flow.GenerateNpcResponse({
+          state,
+          prompt: params.prompt,
+        });
         return [
           { type: "followEdge", edgeId: edge.id },
-          { type: "chat", response, diffs },
+          { type: "respond", response },
+          { type: "diffs", diffs },
         ] satisfies Action[];
       }
     }
-    const { response, diffs } = await flow.GenerateNpcResponse({ state });
-    return [{ type: "chat", response, diffs }] satisfies Action[];
+    const { response, diffs } = await flow.GenerateNpcResponse({
+      state,
+      prompt: params.prompt,
+    });
+    return [
+      { type: "respond", response },
+      { type: "diffs", diffs },
+    ] satisfies Action[];
   },
   async interpretAction(state, params, action) {
     await match<ActionRow, Promise<void>>(action, {
@@ -78,7 +77,10 @@ const spec: Spec<S> = {
         const edge = getConvoTreeEdge(state.convoTree, x.edgeId);
         state.currentId = edge.targetId;
       },
-      async chat(x) {
+      async respond(x) {
+        state.turns.push({ params, response: x.response });
+      },
+      async diffs(x) {
         await runNpcStateDiffs(x.diffs, state.npcState);
       },
     });

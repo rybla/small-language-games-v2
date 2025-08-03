@@ -3,57 +3,29 @@
 |   DIGITAL NEO-BRUTALISM DESIGN SYSTEM BLUEPRINT                              |
 ================================================================================
 |
-|   CORE PRINCIPLES:
-|   1. HONESTY OF MATERIAL: The design exposes its own structure. Containers,
-|      grids, and borders are not hidden but are primary aesthetic elements.
-|      The user should feel the underlying digital "concrete."
+|   This CSS file implements a "Digital Neo-Brutalism" design system. The core
+|   idea is to create a UI that is honest about its digital nature, with
+|   strong, clear, and functional elements.
 |
-|   2. STRONG HIERARCHY: Information is presented with unapologetic clarity.
-|      Scale, weight, and color are used to create a dominant visual flow,
-|      eliminating ambiguity.
-|
-|   3. UNAPOLOGETIC PRESENCE: Elements are solid, tangible, and confident.
-|      Hard shadows, high-contrast colors, and stark typography create a
-|      memorable, three-dimensional interface.
-|
-|   4. FUNCTION OVER FORM: Every element serves a purpose. The aesthetic
-|      arises directly from the function of the components, not from added
-|      decoration.
-|
-|--------------------------------------------------------------------------------
-|
-|   COMPONENT STYLES:
-|
-|   - BUTTONS:
-|     - Appearance: Solid accent color, 2px black border, uppercase bold text.
-|     - Interaction:
-|       - Default: A hard, 4px block shadow creates a "popped out" look.
-|       - Hover: The shadow is removed, and the button translates slightly,
-|         signaling it's ready for action.
-|       - Active: The button appears pressed into the page by inverting its
-|         shadow and translating it down and to the right.
-|
-|   - CONTAINERS & CARDS (.section, .Turn):
-|     - Appearance: White or light gray background, 2px solid black border.
-|     - Shadow: A standard 4px hard block shadow to lift them from the page.
-|
-|   - FORM INPUTS (.textarea, .value):
-|     - Appearance: Simple, rectangular fields with a solid 2px border.
-|     - Focus State: The border color changes to the primary action blue to
-|       provide clear, functional feedback. No soft glows or fades.
-|
-|   - TYPOGRAPHY (.title, general text):
-|     - Font: A clean, sans-serif font like Inter or Arial.
-|     - Hierarchy: Titles are uppercase and bold. Body text is regular weight.
-|     - Color: High contrast is key. Black text on white/light backgrounds.
+|   ORGANIZATION:
+|   1. :root: Defines all global design tokens like colors, spacing, and
+|      border styles. This makes theme-wide changes easy.
+|   2. Main Layout Components (.Page, .sidebar, .main): Defines the top-level
+|      structure of the application page.
+|   3. Section Styling (.section): Styles for the primary content containers,
+|      giving them a distinct, card-like appearance with hard shadows.
+|   4. Form Elements (.textarea, .button, .value): Styles for all interactive
+|      form components, ensuring a consistent look and feel.
+|   5. View Component Layout (.View, .metadata, .chat, .history): Styles
+|      that control the layout of the main chat/interaction view.
+|   6. Turn & Action Styling (.Turn, .prompt, .action, etc.): Specific styles
+|      for the individual turns within the chat history, using different
+|      accent colors to differentiate between prompts, responses, and other
+|      actions, as requested.
 |
 ================================================================================
 */
 
-/*
-:root - CSS Variables
-Defines the core palette and metrics for the design system.
-*/
 :root {
     /* Primary Palette */
     --color-black: #000000;
@@ -89,6 +61,7 @@ Defines the core palette and metrics for the design system.
     --font-family:
         "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         Helvetica, Arial, sans-serif;
+    --font-family-mono: "Courier New", Courier, monospace;
 }
 
 /* Main Layout Components */
@@ -140,7 +113,6 @@ Defines the core palette and metrics for the design system.
 
 .section > .title {
     font-weight: 700;
-    font-size: 1.2rem;
     text-transform: uppercase;
     border-bottom: var(--border-width) var(--border-style);
     padding: var(--space-md);
@@ -156,11 +128,11 @@ Defines the core palette and metrics for the design system.
 .sidebar > .new {
     flex: 0 0 auto;
     min-height: auto;
+}
 
-    & > .body {
-        flex: 0 0 auto;
-        min-height: auto;
-    }
+.sidebar > .new > .body {
+    flex: 0 0 auto;
+    min-height: auto;
 }
 
 .sidebar > .load {
@@ -188,7 +160,6 @@ Defines the core palette and metrics for the design system.
     border-color: var(--color-action-blue);
 }
 
-/* Generic Button Styling (for the load buttons) */
 .button {
     display: block;
     width: 100%;
@@ -223,13 +194,16 @@ Defines the core palette and metrics for the design system.
     gap: var(--space-md);
 }
 
-.View .sidebar {
-    width: 300px;
+.metadata {
+    flex: 0 0 300px;
     background-color: var(--color-white);
     border: var(--border-width) var(--border-style);
     box-shadow: var(--hard-shadow);
     padding: var(--space-md);
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
 }
 
 .chat {
@@ -243,52 +217,42 @@ Defines the core palette and metrics for the design system.
     padding: var(--space-md);
 }
 
+.chat > .title {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
 .history {
     flex-grow: 1;
     overflow-y: auto;
-    padding: var(--space-sm);
-    background-color: var(--color-light-gray);
-    border: var(--border-width) var(--border-style);
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+    justify-content: flex-end;
 }
 
 .Turn {
-    background-color: var(--color-white);
-    border: var(--border-width) var(--border-style);
-    padding: var(--space-sm);
-}
-
-.params,
-.actions {
-    background-color: var(--color-light-gray);
-    padding: var(--space-sm);
-    margin-top: var(--space-sm);
-    border: 1px solid var(--color-mid-gray);
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-family: "Courier New", Courier, monospace;
-}
-
-.params {
-    border-left: 4px solid var(--color-action-blue);
-}
-
-.actions {
-    border-left: 4px solid var(--color-success-green);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
 }
 
 .input {
     flex-shrink: 0;
 }
 
-.textarea {
+.input .textarea {
     min-height: 80px;
 }
 
-/* === NEW STYLES === */
-/* View Component Specifics */
+.chat .textarea {
+    padding: var(--space-sm);
+    background-color: var(--color-light-gray);
+    border: var(--border-width) solid var(--color-mid-gray);
+    border-left: 4px solid var(--color-black);
+    font-style: italic;
+}
+
 .name {
     display: flex;
     flex-direction: column;
@@ -316,4 +280,35 @@ Defines the core palette and metrics for the design system.
 .value:focus {
     outline: none;
     border-color: var(--color-action-blue);
+}
+
+/* Turn & Action Styling */
+.prompt {
+    padding: var(--space-sm);
+    background-color: var(--color-light-gray);
+    border: var(--border-width) solid var(--color-mid-gray);
+    font-style: italic;
+    border-left: 4px solid var(--color-black);
+}
+
+.action {
+    padding: var(--space-sm);
+    background-color: var(--color-white);
+    border: var(--border-width) solid var(--color-dark-gray);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.response {
+    border-left: 4px solid var(--color-success-green);
+}
+
+.followEdge {
+    border-left: 4px solid var(--color-highlight-purple);
+    font-family: var(--font-family-mono);
+}
+
+.diffs {
+    border-left: 4px solid var(--color-warning-orange);
+    font-family: var(--font-family-mono);
 }

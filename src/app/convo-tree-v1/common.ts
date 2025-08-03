@@ -1,4 +1,5 @@
 import { Sig } from "@/library/sva";
+import * as sva from "@/library/sva";
 import { Subtype, UnionToRecord } from "@/utility";
 import { z } from "genkit";
 
@@ -20,13 +21,30 @@ export type S = Subtype<
   Sig
 >;
 
+export type ParamsInitialize = z.infer<typeof ParamsInitialize>;
+export const ParamsInitialize = z.object({
+  prompt: z.string(),
+});
+
+export type ParamsAction = z.infer<typeof ParamsAction>;
+export const ParamsAction = z.object({
+  prompt: z.string(),
+});
+
 export type View = {
   state: State;
-  turns: { params: S["params_action"]; actions: Action[] }[];
+  turns: sva.Turn<S>[];
 };
+
+export type Turn = z.infer<typeof Turn>;
+export const Turn = z.object({
+  params: ParamsAction,
+  response: z.string(),
+});
 
 export type State = z.infer<typeof State>;
 export const State = z.object({
+  turns: z.array(Turn),
   convoTree: z.lazy(() => ConvoTree),
   currentId: z.lazy(() => ConvoTreeNodeId),
   npcState: z.lazy(() => NpcState),
@@ -40,8 +58,11 @@ export const Action = z.union([
     edgeId: z.lazy(() => ConvoTreeEdgeId),
   }),
   z.object({
-    type: z.enum(["chat"]),
+    type: z.enum(["respond"]),
     response: z.string(),
+  }),
+  z.object({
+    type: z.enum(["diffs"]),
     diffs: z.lazy(() => NpcStateDiffs),
   }),
 ]);
@@ -96,6 +117,8 @@ export const ConvoTreeEdge = z.object({
 export type NpcState = z.infer<typeof NpcState>;
 export const NpcState = z.object({
   name: z.string(),
+  description: z.string(),
+  mood: z.string().describe("current mood of the npc"),
   facts: z.array(z.string()).describe("facts that the npc knows"),
 });
 

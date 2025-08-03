@@ -149,14 +149,16 @@ export class Server<S extends Sig> {
   async actInst(params: S["params_action"]): Promise<void> {
     if (this.inst === null) throw new Error("[server.act] Instance not loaded");
     const state = deepcopy(this.inst.state);
-    const view = await this.getInst();
-    const actions = await this.spec.generateActions(this.inst.state, params);
+    const actions = await this.spec.generateActions(
+      this.inst.turns,
+      this.inst.state,
+      params,
+    );
     for (const action of actions) {
       await this.spec.interpretAction(this.inst.state, params, action);
     }
     this.inst.turns.push({
       actions,
-      view,
       params,
       state,
     });

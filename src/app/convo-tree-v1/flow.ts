@@ -1,6 +1,6 @@
-import { ai } from "@/ai";
-import { match } from "@/utility";
-import { z } from "genkit";
+import { ai, getValidOutput, makeTextPart, model } from "@/ai";
+import { indent, match, trim } from "@/utility";
+import { GenerateOptions, MessageData, z } from "genkit";
 import {
   NpcState,
   NpcStateDiffs,
@@ -8,6 +8,7 @@ import {
   NpcStatePredicates,
   State,
 } from "./common";
+import { describeNpcState } from "./semantics";
 
 export const InterpretNpcStatePredicates = ai.defineFlow(
   {
@@ -24,9 +25,31 @@ export const InterpretNpcStatePredicates = ai.defineFlow(
       await match<NpcStatePredicateRow, Promise<void>>(p, {
         async knowsFact(x) {
           // TODO: instead do LLM query
-          if (!state.facts.includes(x.fact)) {
-            result = false;
-          }
+
+          const schema = z.object({
+            knowsFact: z
+              .boolean()
+              .describe("Whether or not the character knows the fact"),
+          });
+          const { knowsFact } = getValidOutput(
+            await ai.generate({
+              model: model.text_speed,
+              system: [
+                makeTextPart(
+                  trim(`
+You are playing a role-playing game with the user. Your character is described as follows:
+
+${indent(describeNpcState(state))}
+
+Your task as the moment is to decide if the character you are playing as is aware of a particular fact. The user will provide the fact in question, and you should response with \`true\` if your character knows that fact, or \`false\` if your character does not know that fact.
+`),
+                ),
+              ],
+              prompt: [makeTextPart(x.fact)],
+              output: { schema },
+            } satisfies GenerateOptions),
+          );
+          if (!knowsFact) result = false;
         },
       });
       if (!result) break;
@@ -40,15 +63,49 @@ export const GenerateNpcResponse = ai.defineFlow(
     name: "GenerateNpcResponse",
     inputSchema: z.object({
       state: State,
+      prompt: z.string(),
     }),
     outputSchema: z.object({
       response: z.string(),
       diffs: NpcStateDiffs,
     }),
   },
-  async ({ state }) => {
+  async ({ state, prompt }) => {
+    const response = await ai.generate({
+      model: model.text_speed,
+      system: [
+        makeTextPart(
+          trim(`
+You are playing a role-playing game with the user. Your character is described as follows:
+
+${indent(describeNpcState(state.npcState))}
+
+Make sure to carefully take into account your character description.
+
+Your task is to have a natural conversation with the user while staying in-character.
+`),
+        ),
+      ],
+      messages: state.turns
+        .map(
+          (turn) =>
+            [
+              {
+                role: "user",
+                content: [makeTextPart(turn.params.prompt)],
+              },
+              {
+                role: "model",
+                content: [makeTextPart(turn.response)],
+              },
+            ] satisfies MessageData[],
+        )
+        .flat(),
+      prompt: makeTextPart(prompt),
+    } satisfies GenerateOptions);
+
     return {
-      response: "hello world",
+      response: response.text,
       diffs: [],
     };
   },

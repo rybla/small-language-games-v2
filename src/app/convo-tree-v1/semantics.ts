@@ -1,4 +1,4 @@
-import { match, ticks } from "@/utility";
+import { bullets, match, ticks, trim } from "@/utility";
 import type {
   ConvoTree,
   ConvoTreeEdge,
@@ -48,4 +48,13 @@ export async function runNpcStateDiff(ds: NpcStateDiffs, s: NpcState) {
       },
     });
   }
+}
+
+export function describeNpcState(s: NpcState): string {
+  return trim(`
+Your name: ${s.name}
+Your current mood: ${s.mood}.
+Facts you know:
+${bullets(s.facts)}
+`);
 }

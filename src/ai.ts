@@ -1,5 +1,5 @@
 import googleAI from "@genkit-ai/googleai";
-import { genkit } from "genkit";
+import { GenerateResponse, genkit, Part } from "genkit";
 
 export const ai = genkit({ plugins: [googleAI()] });
 
@@ -17,3 +17,25 @@ export const temperature = {
   normal: 1.0,
   conservative: 0.5,
 };
+
+export function makeTextPart(text: string): Part {
+  return { text: text.trim() };
+}
+
+export function makeMarkdownFilePart(content: string): Part {
+  return {
+    media: {
+      url: `data:text/markdown;base64,${Buffer.from(content, "utf8").toString("base64")}`,
+    },
+  };
+}
+
+export function getValidOutput<T>(response: GenerateResponse<T>): T {
+  response.assertValidSchema();
+  return response.output!;
+}
+
+export function getValidMedia(response: GenerateResponse<unknown>) {
+  response.assertValidSchema();
+  return response.media!;
+}

@@ -1,11 +1,11 @@
 "use client";
 
 import { ClientInst, InstMetadata } from "@/library/sva";
-import { useEffect, useRef, useState } from "react";
-import { S } from "./common";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { ActionRow, S } from "./common";
 import * as server from "./server";
 import styles from "./page.module.css";
-import { formatDate, stringify } from "@/utility";
+import { formatDate, match, stringify } from "@/utility";
 
 export default function Page() {
   const [instMetadatas, set_instMetadatas] = useState<InstMetadata[]>([]);
@@ -132,17 +132,41 @@ function ViewComponent(props: {
         </div>
       </div>
       <div className={styles.chat}>
-        <div>History</div>
+        <div className={styles.title}>History</div>
         <div className={styles.history}>
           {props.inst.view.turns.map((turn, i) => (
             <div className={styles.Turn} key={i}>
-              <div className={styles.params}>{stringify(turn.params)}</div>
-              <div className={styles.actions}>{stringify(turn.actions)}</div>
+              <div className={styles.prompt}>{turn.params.prompt}</div>
+              {turn.actions.map((action, i) =>
+                match<ActionRow, ReactNode>(action, {
+                  respond: (x) => (
+                    <div
+                      className={`${styles.action} ${styles.response}`}
+                      key={i}
+                    >
+                      {x.response}
+                    </div>
+                  ),
+                  followEdge: (x) => (
+                    <div
+                      className={`${styles.action} ${styles.followEdge}`}
+                      key={i}
+                    >
+                      {x.edgeId}
+                    </div>
+                  ),
+                  diffs: (x) => (
+                    <div className={`${styles.action} ${styles.diffs}`} key={i}>
+                      {stringify(x.diffs)}
+                    </div>
+                  ),
+                }),
+              )}
             </div>
           ))}
           <div ref={turnsBottomRef} />
         </div>
-        <div>Input</div>
+        <div className={styles.title}>Input</div>
         <div className={styles.input}>
           <textarea
             className={styles.textarea}
