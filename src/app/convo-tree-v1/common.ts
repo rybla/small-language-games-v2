@@ -1,4 +1,4 @@
-import { Sig } from "@/library/sva";
+import { Sig, Turn } from "@/library/sva";
 import { Subtype, UnionToRecord } from "@/utility";
 import { z } from "genkit";
 
@@ -11,14 +11,19 @@ export const name = "convo-tree-v1" as const;
 export type S = Subtype<
   {
     name: typeof name;
+    view: View;
+    state: State;
+    action: Action;
     params_initialize: { prompt: string };
     params_action: { prompt: string };
-    state: State;
-    view: View;
-    action: Action;
   },
   Sig
 >;
+
+export type View = {
+  state: State;
+  turns: Turn<S>[];
+};
 
 export type State = z.infer<typeof State>;
 export const State = z.object({
@@ -27,13 +32,19 @@ export const State = z.object({
   npcState: z.lazy(() => NpcState),
 });
 
-export type View = z.infer<typeof View>;
-export const View = z.object({});
-
 export type Action = z.infer<typeof Action>;
-export const Action = z.object({
-  edgeId: z.optional(z.lazy(() => ConvoTreeEdgeId)),
-});
+export type ActionRow = UnionToRecord<Action>;
+export const Action = z.union([
+  z.object({
+    type: z.enum(["followEdge"]),
+    edgeId: z.lazy(() => ConvoTreeEdgeId),
+  }),
+  z.object({
+    type: z.enum(["chat"]),
+    response: z.string(),
+    diffs: z.lazy(() => NpcStateDiffs),
+  }),
+]);
 
 // -----------------------------------------------------------------------------
 // ConvoTree
@@ -94,7 +105,6 @@ export const NpcStateDiffs = z.array(
   z.union([
     z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
     z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
-    z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
   ]),
 );
 
@@ -102,7 +112,6 @@ export type NpcStatePredicates = z.infer<typeof NpcStatePredicates>;
 export type NpcStatePredicateRow = UnionToRecord<NpcStatePredicates[number]>;
 export const NpcStatePredicates = z.array(
   z.union([
-    z.object({ type: z.enum(["knowsFact"]), fact: z.string() }),
     z.object({ type: z.enum(["knowsFact"]), fact: z.string() }),
     z.object({ type: z.enum(["knowsFact"]), fact: z.string() }),
   ]),

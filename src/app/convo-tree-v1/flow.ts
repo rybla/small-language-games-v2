@@ -3,6 +3,7 @@ import { z } from "genkit";
 import {
   ConvoTreeEdge,
   NpcState,
+  NpcStateDiffs,
   NpcStatePredicateRow,
   NpcStatePredicates as NpcStatePredicates,
   State,
@@ -46,35 +47,14 @@ export const GenerateNpcResponse = ai.defineFlow(
       state: State,
     }),
     outputSchema: z.object({
-      state: State,
+      response: z.string(),
+      diffs: NpcStateDiffs,
     }),
   },
   async ({ state }) => {
-    // check for move in convo tree BEFORE response
-
-    const node = getCurrentConvoTreeNode(state);
-    const edges = getConvoTreeEdgesFromNode(state.convoTree, node.id);
-    // the first satisfied edge
-    let edge_result: ConvoTreeEdge | undefined;
-    for (const edge of edges) {
-      const edgeIsSatisfied = await InterpretNpcStatePredicates({
-        state: state.npcState,
-        preds: edge.preds,
-      });
-      if (edgeIsSatisfied) {
-        edge_result = edge;
-        break;
-      }
-    }
-
-    if (edge_result !== undefined) {
-      // TODO: follow edge
-    } else {
-      // not following an edge yet
-    }
-
     return {
-      state,
+      response: "hello world",
+      diffs: [],
     };
   },
 );

@@ -1,19 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 "use server";
 
 import { Endpoint, Spec } from "@/library/sva";
 import { Server } from "@/library/sva-server";
-import { Codomain, do_, Domains, TODO } from "@/utility";
-import { S, name } from "./common";
+import { Codomain, Domains, match } from "@/utility";
+import { Action, ActionRow, name, S } from "./common";
 import * as flow from "./flow";
 import {
+  getConvoTreeEdge,
   getConvoTreeEdgesFromNode,
   getCurrentConvoTreeNode,
 } from "./semantics";
 
 const spec: Spec<S> = {
   name,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async initializeState(metadata, params) {
     return {
       currentId: "node1",
@@ -44,36 +44,46 @@ const spec: Spec<S> = {
     } satisfies S["state"];
   },
   async view(metadata, turns, state) {
-    return {};
+    return {
+      state,
+      turns,
+    };
   },
   async generateActions(state, params) {
     const node = getCurrentConvoTreeNode(state);
     const edges = getConvoTreeEdgesFromNode(state.convoTree, node.id);
-    const edge = await do_(async () => {
-      for (const edge of edges) {
-        const edgeIsSatisfied = await flow.InterpretNpcStatePredicates({
-          state: state.npcState,
-          preds: edge.preds,
-        });
-        if (edgeIsSatisfied) {
-          return edge;
-        }
+    for (const edge of edges) {
+      const edgeIsSatisfied = await flow.InterpretNpcStatePredicates({
+        state: state.npcState,
+        preds: edge.preds,
+      });
+      if (edgeIsSatisfied) {
+        const { response, diffs } = await flow.GenerateNpcResponse({ state });
+        return [
+          { type: "followEdge", edgeId: edge.id },
+          { type: "chat", response, diffs },
+        ] satisfies Action[];
       }
-      return undefined;
-    });
-    return [
-      {
-        edgeId: edge?.id,
-      },
-    ];
+    }
+    const { response, diffs } = await flow.GenerateNpcResponse({ state });
+    return [{ type: "chat", response, diffs }] satisfies Action[];
   },
   async interpretAction(state, params, action) {
-    return;
+    await match<ActionRow, Promise<void>>(action, {
+      async followEdge(x) {
+        const edge = getConvoTreeEdge(state.convoTree, x.edgeId);
+        state.currentId = edge.targetId;
+      },
+      async chat(x) {
+        // pass
+      },
+    });
   },
 };
 
 const server = new Server(spec);
 
+// -----------------------------------------------------------------------------
 // BEGIN endpoint
 
 const endpoint_impl = server.make_endpoint();
@@ -88,3 +98,4 @@ export async function endpoint<K extends keyof Endpoint<S>>(
 }
 
 // END endpoint
+// -----------------------------------------------------------------------------
