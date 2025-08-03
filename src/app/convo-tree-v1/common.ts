@@ -1,5 +1,5 @@
 import { Sig } from "@/library/sva";
-import { Subtype } from "@/utility";
+import { Subtype, UnionToRecord } from "@/utility";
 import { z } from "genkit";
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,9 @@ export type View = z.infer<typeof View>;
 export const View = z.object({});
 
 export type Action = z.infer<typeof Action>;
-export const Action = z.object({});
+export const Action = z.object({
+  edgeId: z.optional(z.lazy(() => ConvoTreeEdgeId)),
+});
 
 // -----------------------------------------------------------------------------
 // ConvoTree
@@ -68,12 +70,12 @@ export const ConvoTreeEdge = z.object({
   targetId: ConvoTreeNodeId.describe(
     "when this predicate is satisfied at source node, then follow this edge to the target node",
   ),
-  pred: z
-    .lazy(() => NpcStatePredicate)
+  preds: z
+    .lazy(() => NpcStatePredicates)
     .describe(
       "when this edge is followed, applies this diff to the current npc state",
     ),
-  diff: z.lazy(() => NpcStateDiff),
+  diffs: z.lazy(() => NpcStateDiffs),
 });
 
 // -----------------------------------------------------------------------------
@@ -86,8 +88,9 @@ export const NpcState = z.object({
   facts: z.array(z.string()).describe("facts that the npc knows"),
 });
 
-export type NpcStateDiff = z.infer<typeof NpcStateDiff>;
-export const NpcStateDiff = z.array(
+export type NpcStateDiffs = z.infer<typeof NpcStateDiffs>;
+export type NpcStateDiffRow = UnionToRecord<NpcStateDiffs[number]>;
+export const NpcStateDiffs = z.array(
   z.union([
     z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
     z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
@@ -95,8 +98,9 @@ export const NpcStateDiff = z.array(
   ]),
 );
 
-export type NpcStatePredicate = z.infer<typeof NpcStatePredicate>;
-export const NpcStatePredicate = z.array(
+export type NpcStatePredicates = z.infer<typeof NpcStatePredicates>;
+export type NpcStatePredicateRow = UnionToRecord<NpcStatePredicates[number]>;
+export const NpcStatePredicates = z.array(
   z.union([
     z.object({ type: z.enum(["knowsFact"]), fact: z.string() }),
     z.object({ type: z.enum(["knowsFact"]), fact: z.string() }),

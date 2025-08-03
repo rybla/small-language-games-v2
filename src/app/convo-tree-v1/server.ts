@@ -4,9 +4,13 @@
 
 import { Endpoint, Spec } from "@/library/sva";
 import { Server } from "@/library/sva-server";
-import { Codomain, Domains, TODO } from "@/utility";
+import { Codomain, do_, Domains, TODO } from "@/utility";
 import { S, name } from "./common";
 import * as flow from "./flow";
+import {
+  getConvoTreeEdgesFromNode,
+  getCurrentConvoTreeNode,
+} from "./semantics";
 
 const spec: Spec<S> = {
   name,
@@ -28,8 +32,8 @@ const spec: Spec<S> = {
             id: "edge1",
             sourceId: "node1",
             targetId: "node2",
-            pred: [{ type: "knowsFact", fact: "the sky is blue" }],
-            diff: [],
+            preds: [{ type: "knowsFact", fact: "the sky is blue" }],
+            diffs: [],
           },
         },
       },
@@ -43,10 +47,25 @@ const spec: Spec<S> = {
     return {};
   },
   async generateActions(state, params) {
-    await flow.GenerateNpcResponse({
-      state,
+    const node = getCurrentConvoTreeNode(state);
+    const edges = getConvoTreeEdgesFromNode(state.convoTree, node.id);
+    const edge = await do_(async () => {
+      for (const edge of edges) {
+        const edgeIsSatisfied = await flow.InterpretNpcStatePredicates({
+          state: state.npcState,
+          preds: edge.preds,
+        });
+        if (edgeIsSatisfied) {
+          return edge;
+        }
+      }
+      return undefined;
     });
-    return [];
+    return [
+      {
+        edgeId: edge?.id,
+      },
+    ];
   },
   async interpretAction(state, params, action) {
     return;

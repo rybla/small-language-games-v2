@@ -1,12 +1,13 @@
-import { ticks } from "@/utility";
-import {
+import { match, ticks } from "@/utility";
+import type {
   ConvoTree,
   ConvoTreeEdge,
   ConvoTreeEdgeId,
   ConvoTreeNode,
   ConvoTreeNodeId,
   NpcState,
-  NpcStateDiff,
+  NpcStateDiffs,
+  NpcStateDiffRow,
   State,
 } from "./common";
 
@@ -39,7 +40,12 @@ export function getConvoTreeEdgesFromNode(
   return Array.from(Object.values(ct.edges).filter((e) => e.sourceId === id));
 }
 
-export function runNpcStateDiff(d: NpcStateDiff, s: NpcState) {
-  for (const x of d) {
+export async function runNpcStateDiff(ds: NpcStateDiffs, s: NpcState) {
+  for (const d of ds) {
+    await match<NpcStateDiffRow, Promise<void>>(d, {
+      async learnFact(x) {
+        s.facts.push(x.fact);
+      },
+    });
   }
 }

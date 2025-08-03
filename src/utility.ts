@@ -237,3 +237,27 @@ export function try_<A>(k: () => A, catch_: (exception: Error) => A): A {
     }
   }
 }
+
+/**
+ * Example: `{ a: { x: number }, b: { x: boolean }, c: { x: string } }`
+ */
+export type Row<T = any> = { [K: string]: T };
+
+export type Variant<R extends Row<object>> = {
+  [K in keyof R]: { type: K } & R[K];
+}[keyof R];
+
+export type V = Variant<{ x: { x: number }; y: { y: string } }>;
+
+export function match<R extends Row<object>, B>(
+  v: Variant<R>,
+  f: {
+    [K in keyof R]: (x: R[K]) => B;
+  },
+): B {
+  return f[v.type](v);
+}
+
+export type UnionToRecord<T extends { type: string }> = {
+  [K in T["type"]]: Omit<Extract<T, { type: K }>, "type">;
+};
