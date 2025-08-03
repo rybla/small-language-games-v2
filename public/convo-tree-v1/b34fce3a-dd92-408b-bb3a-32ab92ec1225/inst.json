@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "id": "b34fce3a-dd92-408b-bb3a-32ab92ec1225",
+    "name": "b34fce3a-dd92-408b-bb3a-32ab92ec1225",
+    "creationDate": 1754242715904
+  },
+  "initialState": {
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "pred": {
+            "type": "knowsFact",
+            "fact": "the sky is blue"
+          },
+          "diff": {}
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "facts": []
+    }
+  },
+  "state": {
+    "currentId": "node1",
+    "convoTree": {
+      "root": "node1",
+      "nodes": {
+        "node1": {
+          "id": "node1"
+        },
+        "node2": {
+          "id": "node2"
+        }
+      },
+      "edges": {
+        "edge1": {
+          "id": "edge1",
+          "sourceId": "node1",
+          "targetId": "node2",
+          "pred": {
+            "type": "knowsFact",
+            "fact": "the sky is blue"
+          },
+          "diff": {}
+        }
+      }
+    },
+    "npcState": {
+      "name": "Benny",
+      "facts": []
+    }
+  },
+  "turns": [
+    {
+      "actions": [],
+      "view": {
+        "metadata": {
+          "id": "b34fce3a-dd92-408b-bb3a-32ab92ec1225",
+          "name": "b34fce3a-dd92-408b-bb3a-32ab92ec1225",
+          "creationDate": 1754242715904
+        },
+        "view": {}
+      },
+      "params": {
+        "prompt": "this is a test"
+      },
+      "state": {
+        "currentId": "node1",
+        "convoTree": {
+          "root": "node1",
+          "nodes": {
+            "node1": {
+              "id": "node1"
+            },
+            "node2": {
+              "id": "node2"
+            }
+          },
+          "edges": {
+            "edge1": {
+              "id": "edge1",
+              "sourceId": "node1",
+              "targetId": "node2",
+              "pred": {
+                "type": "knowsFact",
+                "fact": "the sky is blue"
+              },
+              "diff": {}
+            }
+          }
+        },
+        "npcState": {
+          "name": "Benny",
+          "facts": []
+        }
+      }
+    }
+  ]
+}

@@ -96,7 +96,24 @@ function ViewComponent(props: {
 }) {
   return (
     <div className={styles.View}>
-      <pre>{stringify(props.inst.metadata)}</pre>
+      <div className={styles.sidebar}>
+        <pre>{stringify(props.inst.metadata)}</pre>
+      </div>
+      <div className={styles.chat}>
+        <textarea
+          className={styles.textarea}
+          onKeyDown={(event) => {
+            if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+              event.preventDefault();
+              const params: S["params_action"] = {
+                prompt: event.currentTarget.value,
+              };
+              event.currentTarget.value = "";
+              void props.submitActionParams(params);
+            }
+          }}
+        />
+      </div>
     </div>
   );
 }

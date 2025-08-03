@@ -1,0 +1,11 @@
+{"id":"4fce102a59f445192302926a52ad2a50","type":"flow","start":1754242719696,"name":"GenerateNpcResponse","end":1754242719708.156,"status":0}
+{"id":"a563cbf9738b87394382b72a8376eb66","type":"UNKNOWN","start":1754242719713,"name":"start response","end":1754242719713.0422,"status":0}
+{"id":"9851c7f0000fd699f5a364db274057a5","type":"UNKNOWN","start":1754242719724,"name":"POST /convo-tree-v1","end":1754242719760.1763,"status":0}
+{"id":"488a1dfc2ba77f6e4310aa40b3df15b6","type":"UNKNOWN","start":1754242719764,"name":"POST /convo-tree-v1","end":1754242719790.861,"status":0}
+{"id":"baa0462fbe08d9f17b1df4ffdf9de835","type":"UNKNOWN","start":1754242719719,"name":"fetch GET https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000&key=AIzaSyD9dJOxdmzDuZFnD723cG3t0EeFe1EEGUU","end":1754242719810.036,"status":0}
+{"id":"c8682d5bf733ed214b7c48e88f316a66","type":"UNKNOWN","start":1754242719797,"name":"POST /convo-tree-v1","end":1754242719848.467,"status":0}
+{"id":"c70dfd609a9d8763a76189f526f60636","type":"UNKNOWN","start":1754242903257,"name":"RSC GET /convo-tree-v1","end":1754242903486.7222,"status":0}
+{"id":"f1ab3b8176c806ddf562bce4e1a3d6c4","type":"UNKNOWN","start":1754242929090,"name":"RSC GET /convo-tree-v1","end":1754242929312.9636,"status":0}
+{"id":"57e2622646366872912d0b01b9532edc","type":"UNKNOWN","start":1754242931265,"name":"RSC GET /convo-tree-v1","end":1754242931459.041,"status":0}
+{"id":"0345b698c54fae73118199af1888a798","type":"UNKNOWN","start":1754242942283,"name":"RSC GET /convo-tree-v1","end":1754242942474.9397,"status":0}
+{"id":"e9332c5fc6d4b41c1caf9666acce66ed","type":"UNKNOWN","start":1754242969053,"name":"RSC GET /convo-tree-v1","end":1754242969288.7166,"status":0}
