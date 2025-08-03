@@ -1,7 +1,7 @@
 "use client";
 
 import { ClientInst, InstMetadata } from "@/library/sva";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { S } from "./common";
 import * as server from "./server";
 import styles from "./page.module.css";
@@ -100,10 +100,29 @@ function ViewComponent(props: {
   saveInst: (name?: string) => Promise<void>;
   submitActionParams: (params: S["params_action"]) => Promise<void>;
 }) {
+  const nameInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (nameInputRef.current === null) return;
+    nameInputRef.current.value = props.inst.metadata.name;
+  }, [props.inst]);
+
   return (
     <div className={styles.View}>
       <div className={styles.sidebar}>
-        <pre>{stringify(props.inst.metadata)}</pre>
+        <div className={styles.name}>
+          <div className={styles.label}>name</div>
+          <input
+            className={styles.value}
+            ref={nameInputRef}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                void props.saveInst(event.currentTarget.value);
+              }
+            }}
+            defaultValue={props.inst.metadata.name}
+          />
+        </div>
       </div>
       <div className={styles.chat}>
         <div>History</div>
