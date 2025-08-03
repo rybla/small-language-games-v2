@@ -83,7 +83,7 @@ ${indent(describeNpcState(state.npcState))}
 
 Make sure to carefully take into account your character description.
 
-Your task is to have a natural conversation with the user while staying in-character.
+Your task is to have a natural conversation with the user while staying in-character. Your response should be short, like in a real-time conversation.
 `),
         ),
       ],
@@ -106,7 +106,7 @@ The user will send you a chat message. Your task is to consider the chat message
 You already know the following facts about the user:
 ${bullets(state.npcState.facts)}
 
-So, only report _new_ facts that you've learned about the user from their chat message.
+So, only report _new_ facts that you've learned from the single chat message.
 `),
           ),
         ],
@@ -115,9 +115,7 @@ So, only report _new_ facts that you've learned about the user from their chat m
           schema: z.object({
             facts: z
               .array(z.string())
-              .describe(
-                "An array of new facts that you've learned about the user.",
-              ),
+              .describe("An array of new facts that you've learned."),
           }),
         },
       } satisfies GenerateOptions),

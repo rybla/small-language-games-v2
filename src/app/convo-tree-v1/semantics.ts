@@ -1,4 +1,4 @@
-import { bullets, match, ticks, trim } from "@/utility";
+import { bullets, indent, match, ticks, trim } from "@/utility";
 import type {
   ConvoTree,
   ConvoTreeEdge,
@@ -46,15 +46,20 @@ export async function runNpcStateDiff(ds: NpcStateDiffs, s: NpcState) {
       async learnFact(x) {
         s.facts.push(x.fact);
       },
+      async completeObjective(x) {
+        const i = s.objectives.findIndex((o) => o === x.objective);
+        s.objectives.splice(i, 1);
+      },
     });
   }
 }
 
 export function describeNpcState(s: NpcState): string {
   return trim(`
-Your name: ${s.name}
-Your current mood: ${s.mood}.
-Facts you know:
-${bullets(s.facts)}
+- Name: ${s.name}
+- Overall description: ${s.description}
+- Current mood: ${s.mood}.
+- Known facts: ${s.facts.length === 0 ? "none" : "\n" + indent(bullets(s.facts))}
+- Current objectives: ${s.objectives.length === 0 ? "none" : "\n" + indent(bullets(s.objectives))}
 `);
 }

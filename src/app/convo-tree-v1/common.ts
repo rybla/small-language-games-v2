@@ -118,8 +118,9 @@ export type NpcState = z.infer<typeof NpcState>;
 export const NpcState = z.object({
   name: z.string(),
   description: z.string(),
-  mood: z.string().describe("current mood of the npc"),
-  facts: z.array(z.string()).describe("facts that the npc knows"),
+  mood: z.string().describe("your current mood"),
+  facts: z.array(z.string()).describe("facts that you know"),
+  objectives: z.array(z.string()).describe("your current objectives"),
 });
 
 export type NpcStateDiffs = z.infer<typeof NpcStateDiffs>;
@@ -127,7 +128,7 @@ export type NpcStateDiffRow = UnionToRecord<NpcStateDiffs[number]>;
 export const NpcStateDiffs = z.array(
   z.union([
     z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
-    z.object({ type: z.enum(["learnFact"]), fact: z.string() }),
+    z.object({ type: z.enum(["completeObjective"]), objective: z.string() }),
   ]),
 );
 

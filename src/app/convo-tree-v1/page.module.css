@@ -247,7 +247,7 @@
 
 .chat .textarea {
     padding: var(--space-sm);
-    background-color: var(--color-light-gray);
+
     border: var(--border-width) solid var(--color-mid-gray);
     border-left: 4px solid var(--color-black);
     font-style: italic;
@@ -285,7 +285,7 @@
 /* Turn & Action Styling */
 .prompt {
     padding: var(--space-sm);
-    background-color: var(--color-light-gray);
+
     border: var(--border-width) solid var(--color-mid-gray);
     font-style: italic;
     border-left: 4px solid var(--color-black);
@@ -311,4 +311,16 @@
 .diffs {
     border-left: 4px solid var(--color-warning-orange);
     font-family: var(--font-family-mono);
+}
+
+.npcState {
+}
+
+.pre {
+    border: var(--border-width) solid var(--color-mid-gray);
+    border-radius: var(--border-radius);
+    padding: var(--space-sm);
+    background-color: var(--color-light-gray);
+
+    overflow: auto;
 }

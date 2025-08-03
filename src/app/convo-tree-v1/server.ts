@@ -26,7 +26,7 @@ const spec: Spec<S> = {
         id: "edge1",
         sourceId: nodes.node1.id,
         targetId: nodes.node2.id,
-        preds: [{ type: "knowsFact", fact: "the user is a gardner" }],
+        preds: [{ type: "knowsFact", fact: "the user is a gardener" }],
         diffs: [{ type: "learnFact", fact: 'the password is "genie123"' }],
       },
     } satisfies ConvoTree["edges"];
@@ -44,6 +44,7 @@ const spec: Spec<S> = {
         description: "Benny is a professional chef with a passion for cooking.",
         facts: ["I know the best recipe for pizza."],
         mood: "neutral",
+        objectives: ["I want to convince the user to buy pizzas from me."],
       },
     } satisfies S["state"];
   },

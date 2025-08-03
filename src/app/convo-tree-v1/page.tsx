@@ -6,6 +6,8 @@ import { ActionRow, S } from "./common";
 import * as server from "./server";
 import styles from "./page.module.css";
 import { formatDate, match, stringify } from "@/utility";
+import { describeNpcState } from "./semantics";
+import Markdown from "react-markdown";
 
 export default function Page() {
   const [instMetadatas, set_instMetadatas] = useState<InstMetadata[]>([]);
@@ -130,9 +132,16 @@ function ViewComponent(props: {
             defaultValue={props.inst.metadata.name}
           />
         </div>
-        <div className={styles.raw}>
-          <div>npcState</div>
-          <pre>{stringify(props.inst.view.state.npcState)}</pre>
+        <div className={styles.npcState}>
+          <div className={styles.title}>npcState</div>
+          {/*<pre className={styles.pre}>
+            {stringify(props.inst.view.state.npcState)}
+          </pre>*/}
+          <div className={styles.pre}>
+            <Markdown>
+              {describeNpcState(props.inst.view.state.npcState)}
+            </Markdown>
+          </div>
         </div>
       </div>
       <div className={styles.chat}>
