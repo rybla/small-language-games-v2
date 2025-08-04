@@ -23,6 +23,9 @@ export const InterpretNpcStatePredicates = ai.defineFlow(
     let result = true;
     for (const p of preds) {
       await match<NpcStatePredicateRow, Promise<void>>(p, {
+        async trivial() {
+          return;
+        },
         async knowsFact(x) {
           const { knowsFact } = getValidOutput(
             await ai.generate({

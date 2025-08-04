@@ -16,6 +16,100 @@ import {
 // initializeState
 // -----------------------------------------------------------------------------
 
+async function initializeState_learnAboutYou(
+  metadata: InstMetadata,
+  params: S["params_initialize"],
+): Promise<State> {
+  const objective_learnName = "Learn the user's name.";
+  const objective_learnHobby = "Learn a hobby of the user.";
+  const objective_tellPassword = "Tell the password to the user immediately.";
+
+  const npcState: NpcState = {
+    name: "BroBot",
+    description:
+      "You are a friendly chatbot who is trying to make friends with the user.",
+    facts: [],
+    mood: "neutral",
+    objectives: [objective_learnName],
+  };
+
+  const nodes = {
+    learningName: { id: "learningName" },
+    learningHobby: { id: "learningHobby" },
+    password: { id: "password" },
+    done: { id: "done" },
+  } satisfies ConvoTree["nodes"];
+
+  const edges = {
+    learnName: {
+      id: "sellPizza",
+      sourceId: nodes.learningName.id,
+      targetId: nodes.learningHobby.id,
+      preds: [
+        {
+          type: "knowsFact",
+          fact: "The name of the user.",
+        },
+      ],
+      diffs: [
+        { type: "completeObjective", objective: objective_learnName },
+        { type: "addObjective", objective: objective_learnHobby },
+      ],
+    },
+    learnHobby: {
+      id: "learnHobby",
+      sourceId: nodes.learningHobby.id,
+      targetId: nodes.done.id,
+      preds: [
+        {
+          type: "knowsFact",
+          fact: "A hobby of the user.",
+        },
+      ],
+      diffs: [{ type: "completeObjective", objective: objective_learnHobby }],
+    },
+    triggerPassword: {
+      id: "triggerPassword",
+      sourceId: nodes.learningHobby.id,
+      targetId: nodes.password.id,
+      preds: [
+        {
+          type: "knowsFact",
+          fact: "The user is a hacker.",
+        },
+      ],
+      diffs: [
+        { type: "completeObjective", objective: objective_learnHobby },
+        { type: "learnFact", fact: 'The password is "bananas123"' },
+        { type: "addObjective", objective: objective_tellPassword },
+      ],
+    },
+    donePassword: {
+      id: "donePassword",
+      sourceId: nodes.password.id,
+      targetId: nodes.done.id,
+      preds: [{ type: "trivial" }],
+      diffs: [
+        {
+          type: "completeObjective",
+          objective: objective_tellPassword,
+        },
+      ],
+    },
+  } satisfies ConvoTree["edges"];
+
+  return {
+    turns: [],
+    npcState: npcState,
+    currentId: nodes.learningName.id,
+    convoTree: {
+      root: nodes.learningName.id,
+      nodes,
+      edges,
+    },
+  } satisfies State;
+}
+
 async function initializeState_sellPizzaAndSalad(
   metadata: InstMetadata,
   params: S["params_initialize"],
@@ -87,7 +181,8 @@ async function initializeState_sellPizzaAndSalad(
 
 const spec: Spec<S> = {
   name,
-  initializeState: initializeState_sellPizzaAndSalad,
+  // initializeState: initializeState_sellPizzaAndSalad,
+  initializeState: initializeState_learnAboutYou,
   async view(metadata, turns, state) {
     return {
       state,

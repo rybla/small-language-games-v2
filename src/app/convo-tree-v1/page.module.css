@@ -1,234 +1,338 @@
 /*
 ================================================================================
-|   DIGITAL NEO-BRUTALISM DESIGN SYSTEM BLUEPRINT                              |
+|                              BLUEPRINT                                     |
+|                  THE DIGITAL NEO-BRUTALISM DESIGN SYSTEM                   |
 ================================================================================
-|
-|   This CSS file implements a "Digital Neo-Brutalism" design system. The core
-|   idea is to create a UI that is honest about its digital nature, with
-|   strong, clear, and functional elements.
-|
-|   ORGANIZATION:
-|   1. :root: Defines all global design tokens like colors, spacing, and
-|      border styles. This makes theme-wide changes easy.
-|   2. Main Layout Components (.Page, .sidebar, .main): Defines the top-level
-|      structure of the application page.
-|   3. Section Styling (.section): Styles for the primary content containers,
-|      giving them a distinct, card-like appearance with hard shadows.
-|   4. Form Elements (.textarea, .button, .value): Styles for all interactive
-|      form components, ensuring a consistent look and feel.
-|   5. View Component Layout (.View, .metadata, .chat, .history): Styles
-|      that control the layout of the main chat/interaction view.
-|   6. Turn & Action Styling (.Turn, .prompt, .action, etc.): Specific styles
-|      for the individual turns within the chat history, using different
-|      accent colors to differentiate between prompts, responses, and other
-|      actions, as requested.
-|
-================================================================================
+
+## Core Concept
+Digital Neo-Brutalism is a design system inspired by the architectural movement
+of the mid-20th century. It rejects decorative, non-functional design in favor
+of raw, exposed materials and structures. This system prioritizes honesty,
+clarity, and a strong, unapologetic presence. It is not delicate or subtle;
+it is bold, functional, and opinionated.
+
+Our core principles are:
+  - Honesty of Material: We expose the underlying structure of the digital
+    interface. Containers, grids, and boundaries are not hidden but are made
+    a central part of the aesthetic. The design reveals how it was built.
+  - Strong Hierarchy: Information is organized in a clear, logical, and
+    visually dominant hierarchy. Scale, weight, and placement are used to
+    guide the user's eye without ambiguity.
+  - Unapologetic Presence: The design does not shy away from taking up space.
+    It uses hard shadows, high contrast, and stark typography to create a
+    memorable and solid three-dimensional feel.
+  - Function Over Form: Every design element must serve a purpose. Decoration
+    for its own sake is eliminated. The aesthetic arises directly from the
+    function of the components.
+
+## Design Specifications
+
+### Shadows and Dimensions
+- Hard Block Shadows: box-shadow: 4px 4px 0px #000000;
+- Diagonal Offsets: Shadows are offset on a 45-degree angle.
+
+### Colors
+- Primary Palette: #000000, #FFFFFF, #CCCCCC, #888888
+- Accent Palette:
+  - #007AFF (Action Blue)
+  - #FF3B30 (Destructive Red)
+  - #34C759 (Success Green)
+  - #FF9500 (Warning Orange)
+  - #AF52DE (Highlight Purple)
+  - #FFCC00 (Attention Yellow)
+
+### Structure and Spacing
+- Corners: border-radius: 0; (Sharp corners only)
+- Borders: Solid, 1px or 2px black or gray borders.
+- Layout: Strict, visible grid system (8pt grid).
+
 */
 
+/* ========================================================================== */
+/* VARIABLES                                   */
+/* ========================================================================== */
+
 :root {
-    /* Primary Palette */
-    --color-black: #000000;
-    --color-white: #ffffff;
-    --color-light-gray: #f0f0f0;
-    --color-mid-gray: #888888;
-    --color-dark-gray: #333333;
+    /* Colors */
+    --black: #000000;
+    --white: #ffffff;
+    --light-gray: #f2f2f2;
+    --mid-gray: #888888;
+    --dark-gray: #333333;
 
-    /* Accent Palette */
-    --color-action-blue: #007aff;
-    --color-destructive-red: #ff3b30;
-    --color-success-green: #34c759;
-    --color-warning-orange: #ff9500;
-    --color-highlight-purple: #af52de;
-    --color-attention-yellow: #ffcc00;
+    /* Accent Colors */
+    --action-blue: #007aff;
+    --destructive-red: #ff3b30;
+    --success-green: #34c759;
+    --warning-orange: #ff9500;
+    --highlight-purple: #af52de;
+    --attention-yellow: #ffcc00;
 
-    /* Spacing & Sizing */
-    --space-unit: 8px;
-    --space-xs: calc(var(--space-unit) * 0.5); /* 4px */
-    --space-sm: var(--space-unit); /* 8px */
-    --space-md: calc(var(--space-unit) * 2); /* 16px */
-    --space-lg: calc(var(--space-unit) * 3); /* 24px */
-    --space-xl: calc(var(--space-unit) * 4); /* 32px */
+    /* Sizing & Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
 
-    /* Borders & Shadows */
+    /* Borders */
     --border-width: 2px;
-    --border-style: solid var(--color-black);
-    --border-radius: 0;
-    --hard-shadow: 4px 4px 0px var(--color-black);
-    --hard-shadow-inset: inset 4px 4px 0px var(--color-dark-gray);
+    --border-style: solid;
+    --border-color: var(--black);
+    --border: var(--border-width) var(--border-style) var(--border-color);
+
+    /* Shadows */
+    --shadow-offset: 4px;
+    --hard-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--black);
 
     /* Fonts */
     --font-family:
-        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Helvetica, Arial, sans-serif;
-    --font-family-mono: "Courier New", Courier, monospace;
+        "Menlo", "Monaco", "Lucida Console", "Liberation Mono",
+        "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 18px;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
 }
 
-/* Main Layout Components */
-.Page {
-    flex: 1 1 0;
-    min-height: 0;
+/* ========================================================================== */
+/* BASE STYLES                                 */
+/* ========================================================================== */
 
+.Page,
+.View,
+.sidebar,
+.main,
+.chat,
+.metadata,
+.section,
+.history,
+.input {
     display: flex;
-    flex-direction: row;
-    align-items: stretch;
+    box-sizing: border-box;
+}
 
-    background-color: var(--color-light-gray);
-    color: var(--color-black);
+.textarea,
+.input {
     font-family: var(--font-family);
+    font-size: var(--font-size-md);
+    color: var(--black);
+    background-color: var(--white);
+    border: var(--border);
+    padding: var(--space-sm);
+    box-shadow: var(--hard-shadow);
+    transition: all 0.1s ease-in-out;
+}
+
+.textarea:focus,
+.input:focus {
+    outline: none;
+    border-color: var(--action-blue);
+    box-shadow: 0 0 0 var(--border-width) var(--action-blue);
+}
+
+.textarea {
+    resize: none;
+}
+
+/* ========================================================================== */
+/* LAYOUT                                    */
+/* ========================================================================== */
+
+.Page {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--light-gray);
+    font-family: var(--font-family);
+    flex-direction: row;
 }
 
 .sidebar {
-    flex: 0 0 auto;
-    width: 350px;
-
-    background-color: var(--color-light-gray);
-    border-right: var(--border-width) var(--border-style);
-    padding: var(--space-md);
-    overflow-y: auto;
-    display: flex;
+    width: 300px;
+    flex-shrink: 0;
     flex-direction: column;
-    gap: var(--space-lg);
+    padding: var(--space-md);
+    gap: var(--space-md);
+    border-right: var(--border);
+    background-color: var(--white);
 }
 
 .main {
-    flex: 1 1 0;
-    min-width: 0;
-
+    flex-grow: 1;
     padding: var(--space-md);
-    overflow-y: auto;
-}
-
-/* Section Styling */
-.section {
-    flex: 1 1 0;
-    min-height: 0;
-
-    background-color: var(--color-white);
-    border: var(--border-width) var(--border-style);
-    box-shadow: var(--hard-shadow);
-    display: flex;
-    flex-direction: column;
-}
-
-.section > .title {
-    font-weight: 700;
-    text-transform: uppercase;
-    border-bottom: var(--border-width) var(--border-style);
-    padding: var(--space-md);
-}
-
-.section > .body {
-    flex: 1 1 0;
-    min-height: 0;
     overflow: auto;
-    padding: var(--space-md);
 }
 
-.sidebar > .new {
-    flex: 0 0 auto;
-    min-height: auto;
-}
-
-.sidebar > .new > .body {
-    flex: 0 0 auto;
-    min-height: auto;
-}
-
-.sidebar > .load {
-    flex: 1 1 0;
-    min-height: 0;
-}
-
-/* Form Elements */
-.textarea {
-    width: 100%;
-    min-height: 120px;
-    padding: var(--space-sm);
-    border: var(--border-width) var(--border-style);
-    border-radius: var(--border-radius);
-    background-color: var(--color-white);
-    font-family: var(--font-family);
-    font-size: 1rem;
-    box-sizing: border-box; /* Important for padding and border */
-    resize: none;
-    transition: border-color 0.1s ease-in-out;
-}
-
-.textarea:focus {
-    outline: none;
-    border-color: var(--color-action-blue);
-}
-
-.button {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background-color: var(--color-white);
-    color: var(--color-black);
-    border: var(--border-width) var(--border-style);
-    padding: var(--space-sm);
-    margin-bottom: var(--space-sm);
-    font-family: var(--font-family);
-    cursor: pointer;
-    box-shadow: var(--hard-shadow);
-    transition:
-        transform 0.1s ease-in-out,
-        box-shadow 0.1s ease-in-out;
-}
-
-.button:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--color-black);
-}
-
-.button:active {
-    transform: translate(4px, 4px);
-    box-shadow: none;
-}
-
-/* View Component Layout */
 .View {
-    display: flex;
+    width: 100%;
     height: 100%;
-    gap: var(--space-md);
+    flex-direction: row;
+    border: var(--border);
+    box-shadow: var(--hard-shadow);
+    background-color: var(--white);
 }
 
 .metadata {
-    flex: 0 0 300px;
-    background-color: var(--color-white);
-    border: var(--border-width) var(--border-style);
-    box-shadow: var(--hard-shadow);
-    padding: var(--space-md);
-    overflow-y: auto;
-    display: flex;
+    width: 300px;
+    flex-shrink: 0;
     flex-direction: column;
+    padding: var(--space-md);
     gap: var(--space-lg);
+    border-right: var(--border);
+    background: repeating-linear-gradient(
+        45deg,
+        var(--light-gray),
+        var(--light-gray) 10px,
+        #fafafa 10px,
+        #fafafa 20px
+    );
 }
 
 .chat {
     flex-grow: 1;
-    display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    background-color: var(--color-white);
-    border: var(--border-width) var(--border-style);
+}
+
+/* ========================================================================== */
+/* COMPONENTS                                  */
+/* ========================================================================== */
+
+.section {
+    flex-direction: column;
+    border: var(--border);
     box-shadow: var(--hard-shadow);
-    padding: var(--space-md);
 }
 
-.chat > .title {
-    font-weight: 700;
+.new {
+    /* Fixed size as per instructions */
+    height: 200px;
+}
+
+.load {
+    /* Fills remaining space in sidebar */
+    flex-grow: 1;
+    min-height: 0; /* Important for flex-grow to work in a flex column */
+}
+
+.title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
     text-transform: uppercase;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: var(--border);
+    background-color: var(--attention-yellow);
+    color: var(--black);
 }
 
-.history {
+.body {
+    padding: var(--space-sm);
     flex-grow: 1;
     overflow-y: auto;
+    background-color: var(--white);
+    /* Custom scrollbar for brutalist aesthetic */
+    scrollbar-width: thin;
+    scrollbar-color: var(--black) var(--light-gray);
+}
+
+.body::-webkit-scrollbar {
+    width: 8px;
+}
+.body::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+.body::-webkit-scrollbar-thumb {
+    background-color: var(--black);
+    border: var(--border-width) var(--border-style) var(--light-gray);
+}
+
+.textarea {
+    width: 100%;
+    box-shadow: none; /* Shadow is on the parent container */
+    border: none;
+    background: transparent;
+}
+
+.button {
+    width: 100%;
+    padding: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    background-color: var(--white);
+    border: var(--border);
+    box-shadow: var(--hard-shadow);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.button:hover {
+    background-color: var(--highlight-purple);
+    color: var(--white);
+}
+
+.button:active {
+    transform: translate(var(--shadow-offset), var(--shadow-offset));
+    box-shadow: none;
+}
+
+/* --- View Components --- */
+
+.name {
     display: flex;
     flex-direction: column;
+}
+
+.label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    margin-bottom: var(--space-xs);
+    color: var(--dark-gray);
+}
+
+.value {
+    width: 100%;
+}
+
+.npcState .title {
+    background-color: var(--action-blue);
+    color: var(--white);
+}
+.npcState .pre {
+    padding: var(--space-md);
+    background-color: var(--white);
+    border: var(--border);
+    margin-top: var(--space-sm);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: var(--font-size-sm);
+}
+
+/* --- Chat Components --- */
+
+.chat .title {
+    background-color: var(--success-green);
+    color: var(--white);
+}
+
+.chat .history {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-height: 0;
+    padding: var(--space-md);
+    overflow-y: auto;
     gap: var(--space-md);
-    justify-content: flex-end;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat .input {
+    height: 150px; /* Fixed height as per instructions */
+    flex-shrink: 0;
+    padding: var(--space-sm);
+    border-top: var(--border);
+    background-color: var(--light-gray);
 }
 
 .Turn {
@@ -237,90 +341,21 @@
     gap: var(--space-md);
 }
 
-.input {
-    flex-shrink: 0;
+.prompt,
+.response {
+    padding: var(--space-sm) var(--space-md);
+    border: var(--border);
+    max-width: 80%;
 }
 
-.input .textarea {
-    min-height: 80px;
-}
-
-.chat .textarea {
-    padding: var(--space-sm);
-
-    border: var(--border-width) solid var(--color-mid-gray);
-    border-left: 4px solid var(--color-black);
-    font-style: italic;
-}
-
-.name {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-}
-
-.label {
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 1rem;
-}
-
-.value {
-    width: 100%;
-    padding: var(--space-sm);
-    border: var(--border-width) var(--border-style);
-    border-radius: var(--border-radius);
-    background-color: var(--color-white);
-    font-family: var(--font-family);
-    font-size: 1rem;
-    box-sizing: border-box;
-    transition: border-color 0.1s ease-in-out;
-}
-
-.value:focus {
-    outline: none;
-    border-color: var(--color-action-blue);
-}
-
-/* Turn & Action Styling */
 .prompt {
-    padding: var(--space-sm);
-
-    border: var(--border-width) solid var(--color-mid-gray);
-    font-style: italic;
-    border-left: 4px solid var(--color-black);
-}
-
-.action {
-    padding: var(--space-sm);
-    background-color: var(--color-white);
-    border: var(--border-width) solid var(--color-dark-gray);
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    background-color: var(--light-gray);
+    align-self: flex-start;
+    border-color: var(--mid-gray);
 }
 
 .response {
-    border-left: 4px solid var(--color-success-green);
-}
-
-.followEdge {
-    border-left: 4px solid var(--color-highlight-purple);
-    font-family: var(--font-family-mono);
-}
-
-.diffs {
-    border-left: 4px solid var(--color-warning-orange);
-    font-family: var(--font-family-mono);
-}
-
-.npcState {
-}
-
-.pre {
-    border: var(--border-width) solid var(--color-mid-gray);
-    border-radius: var(--border-radius);
-    padding: var(--space-sm);
-    background-color: var(--color-light-gray);
-
-    overflow: auto;
+    background-color: var(--white);
+    align-self: flex-end;
+    box-shadow: var(--hard-shadow);
 }

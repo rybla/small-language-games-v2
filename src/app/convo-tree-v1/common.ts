@@ -136,6 +136,6 @@ export type NpcStatePredicateRow = UnionToRecord<NpcStatePredicates[number]>;
 export const NpcStatePredicates = z.array(
   z.union([
     z.object({ type: z.enum(["knowsFact"]), fact: z.string() }),
-    z.object({ type: z.enum(["knowsFact"]), fact: z.string() }),
+    z.object({ type: z.enum(["trivial"]) }),
   ]),
 );

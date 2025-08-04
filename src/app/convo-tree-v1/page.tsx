@@ -122,7 +122,7 @@ function ViewComponent(props: {
         <div className={styles.name}>
           <div className={styles.label}>name</div>
           <input
-            className={styles.value}
+            className={`${styles.input} ${styles.value}`}
             ref={nameInputRef}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
@@ -132,8 +132,12 @@ function ViewComponent(props: {
             defaultValue={props.inst.metadata.name}
           />
         </div>
-        <div className={styles.npcState}>
-          <div className={styles.title}>npcState</div>
+        <div className={styles.name}>
+          <div className={styles.label}>nodeId</div>
+          <div className={styles.value}>{props.inst.view.state.currentId}</div>
+        </div>
+        <div className={styles.name}>
+          <div className={styles.label}>npcState</div>
           <div className={styles.pre}>
             <Markdown>
               {describeNpcState(props.inst.view.state.npcState)}

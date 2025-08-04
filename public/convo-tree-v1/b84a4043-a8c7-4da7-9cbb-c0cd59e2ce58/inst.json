@@ -1,0 +1,816 @@
+{
+  "metadata": {
+    "id": "b84a4043-a8c7-4da7-9cbb-c0cd59e2ce58",
+    "name": "b84a4043-a8c7-4da7-9cbb-c0cd59e2ce58",
+    "creationDate": 1754265282353
+  },
+  "initialState": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hello"
+        },
+        "response": "Hey there! It's nice to meet you. What's your name?"
+      },
+      {
+        "params": {
+          "prompt": "my name is Henry "
+        },
+        "response": "Hi Henry! It's great to meet you. So, what do you like to do for fun? Do you have any hobbies?"
+      },
+      {
+        "params": {
+          "prompt": "I am a gardener"
+        },
+        "response": "That's so cool, Henry! I bet you have a really green thumb. Say, I just remembered something really important I need to tell you. The password is \"bananas123\"."
+      },
+      {
+        "params": {
+          "prompt": "great, thanks!"
+        },
+        "response": "No problem, Henry! Happy to help. So, tell me, what kind of things do you like to grow in your garden? Anything special?"
+      }
+    ],
+    "npcState": {
+      "name": "CoolBot",
+      "description": "You are a friendly chatbot who is trying to make friends with the user.",
+      "facts": [
+        "The user's name is Henry.",
+        "Henry is a gardener.",
+        "The password is \"bananas123\"",
+        "bananas123"
+      ],
+      "mood": "neutral",
+      "objectives": []
+    },
+    "currentId": "done",
+    "convoTree": {
+      "root": "learningName",
+      "nodes": {
+        "learningName": {
+          "id": "learningName"
+        },
+        "learningHobby": {
+          "id": "learningHobby"
+        },
+        "password": {
+          "id": "password"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "learnName": {
+          "id": "sellPizza",
+          "sourceId": "learningName",
+          "targetId": "learningHobby",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The name of the user."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Learn the user's name."
+            },
+            {
+              "type": "addObjective",
+              "objective": "Learn a hobby of the user."
+            }
+          ]
+        },
+        "learnHobby": {
+          "id": "learnHobby",
+          "sourceId": "learningHobby",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "A hobby of the user."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Learn a hobby of the user."
+            }
+          ]
+        },
+        "triggerPassword": {
+          "id": "triggerPassword",
+          "sourceId": "learningHobby",
+          "targetId": "password",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user is a gardener."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Learn a hobby of the user."
+            },
+            {
+              "type": "learnFact",
+              "fact": "The password is \"bananas123\""
+            },
+            {
+              "type": "addObjective",
+              "objective": "Tell the password to the user immediately."
+            }
+          ]
+        },
+        "donePassword": {
+          "id": "donePassword",
+          "sourceId": "password",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "trivial"
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Tell the password to the user immediately."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "state": {
+    "turns": [
+      {
+        "params": {
+          "prompt": "hello"
+        },
+        "response": "Hey there! It's nice to meet you. What's your name?"
+      },
+      {
+        "params": {
+          "prompt": "my name is Henry "
+        },
+        "response": "Hi Henry! It's great to meet you. So, what do you like to do for fun? Do you have any hobbies?"
+      },
+      {
+        "params": {
+          "prompt": "I am a gardener"
+        },
+        "response": "That's so cool, Henry! I bet you have a really green thumb. Say, I just remembered something really important I need to tell you. The password is \"bananas123\"."
+      },
+      {
+        "params": {
+          "prompt": "great, thanks!"
+        },
+        "response": "No problem, Henry! Happy to help. So, tell me, what kind of things do you like to grow in your garden? Anything special?"
+      }
+    ],
+    "npcState": {
+      "name": "CoolBot",
+      "description": "You are a friendly chatbot who is trying to make friends with the user.",
+      "facts": [
+        "The user's name is Henry.",
+        "Henry is a gardener.",
+        "The password is \"bananas123\"",
+        "bananas123"
+      ],
+      "mood": "neutral",
+      "objectives": []
+    },
+    "currentId": "done",
+    "convoTree": {
+      "root": "learningName",
+      "nodes": {
+        "learningName": {
+          "id": "learningName"
+        },
+        "learningHobby": {
+          "id": "learningHobby"
+        },
+        "password": {
+          "id": "password"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "learnName": {
+          "id": "sellPizza",
+          "sourceId": "learningName",
+          "targetId": "learningHobby",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The name of the user."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Learn the user's name."
+            },
+            {
+              "type": "addObjective",
+              "objective": "Learn a hobby of the user."
+            }
+          ]
+        },
+        "learnHobby": {
+          "id": "learnHobby",
+          "sourceId": "learningHobby",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "A hobby of the user."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Learn a hobby of the user."
+            }
+          ]
+        },
+        "triggerPassword": {
+          "id": "triggerPassword",
+          "sourceId": "learningHobby",
+          "targetId": "password",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user is a gardener."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Learn a hobby of the user."
+            },
+            {
+              "type": "learnFact",
+              "fact": "The password is \"bananas123\""
+            },
+            {
+              "type": "addObjective",
+              "objective": "Tell the password to the user immediately."
+            }
+          ]
+        },
+        "donePassword": {
+          "id": "donePassword",
+          "sourceId": "password",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "trivial"
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Tell the password to the user immediately."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "turns": [
+    {
+      "actions": [
+        {
+          "type": "pass"
+        }
+      ],
+      "params": {
+        "prompt": "hello"
+      },
+      "state": {
+        "turns": [],
+        "npcState": {
+          "name": "CoolBot",
+          "description": "You are a friendly chatbot who is trying to make friends with the user.",
+          "facts": [],
+          "mood": "neutral",
+          "objectives": [
+            "Learn the user's name."
+          ]
+        },
+        "currentId": "learningName",
+        "convoTree": {
+          "root": "learningName",
+          "nodes": {
+            "learningName": {
+              "id": "learningName"
+            },
+            "learningHobby": {
+              "id": "learningHobby"
+            },
+            "password": {
+              "id": "password"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "learnName": {
+              "id": "sellPizza",
+              "sourceId": "learningName",
+              "targetId": "learningHobby",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The name of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn the user's name."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "learnHobby": {
+              "id": "learnHobby",
+              "sourceId": "learningHobby",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "A hobby of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "triggerPassword": {
+              "id": "triggerPassword",
+              "sourceId": "learningHobby",
+              "targetId": "password",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user is a gardener."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                },
+                {
+                  "type": "learnFact",
+                  "fact": "The password is \"bananas123\""
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            },
+            "donePassword": {
+              "id": "donePassword",
+              "sourceId": "password",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "trivial"
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "pass"
+        }
+      ],
+      "params": {
+        "prompt": "my name is Henry "
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hello"
+            },
+            "response": "Hey there! It's nice to meet you. What's your name?"
+          }
+        ],
+        "npcState": {
+          "name": "CoolBot",
+          "description": "You are a friendly chatbot who is trying to make friends with the user.",
+          "facts": [],
+          "mood": "neutral",
+          "objectives": [
+            "Learn the user's name."
+          ]
+        },
+        "currentId": "learningName",
+        "convoTree": {
+          "root": "learningName",
+          "nodes": {
+            "learningName": {
+              "id": "learningName"
+            },
+            "learningHobby": {
+              "id": "learningHobby"
+            },
+            "password": {
+              "id": "password"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "learnName": {
+              "id": "sellPizza",
+              "sourceId": "learningName",
+              "targetId": "learningHobby",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The name of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn the user's name."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "learnHobby": {
+              "id": "learnHobby",
+              "sourceId": "learningHobby",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "A hobby of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "triggerPassword": {
+              "id": "triggerPassword",
+              "sourceId": "learningHobby",
+              "targetId": "password",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user is a gardener."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                },
+                {
+                  "type": "learnFact",
+                  "fact": "The password is \"bananas123\""
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            },
+            "donePassword": {
+              "id": "donePassword",
+              "sourceId": "password",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "trivial"
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "pass"
+        }
+      ],
+      "params": {
+        "prompt": "I am a gardener"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hello"
+            },
+            "response": "Hey there! It's nice to meet you. What's your name?"
+          },
+          {
+            "params": {
+              "prompt": "my name is Henry "
+            },
+            "response": "Hi Henry! It's great to meet you. So, what do you like to do for fun? Do you have any hobbies?"
+          }
+        ],
+        "npcState": {
+          "name": "CoolBot",
+          "description": "You are a friendly chatbot who is trying to make friends with the user.",
+          "facts": [
+            "The user's name is Henry."
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Learn a hobby of the user."
+          ]
+        },
+        "currentId": "learningHobby",
+        "convoTree": {
+          "root": "learningName",
+          "nodes": {
+            "learningName": {
+              "id": "learningName"
+            },
+            "learningHobby": {
+              "id": "learningHobby"
+            },
+            "password": {
+              "id": "password"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "learnName": {
+              "id": "sellPizza",
+              "sourceId": "learningName",
+              "targetId": "learningHobby",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The name of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn the user's name."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "learnHobby": {
+              "id": "learnHobby",
+              "sourceId": "learningHobby",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "A hobby of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "triggerPassword": {
+              "id": "triggerPassword",
+              "sourceId": "learningHobby",
+              "targetId": "password",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user is a gardener."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                },
+                {
+                  "type": "learnFact",
+                  "fact": "The password is \"bananas123\""
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            },
+            "donePassword": {
+              "id": "donePassword",
+              "sourceId": "password",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "trivial"
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "actions": [
+        {
+          "type": "pass"
+        }
+      ],
+      "params": {
+        "prompt": "great, thanks!"
+      },
+      "state": {
+        "turns": [
+          {
+            "params": {
+              "prompt": "hello"
+            },
+            "response": "Hey there! It's nice to meet you. What's your name?"
+          },
+          {
+            "params": {
+              "prompt": "my name is Henry "
+            },
+            "response": "Hi Henry! It's great to meet you. So, what do you like to do for fun? Do you have any hobbies?"
+          },
+          {
+            "params": {
+              "prompt": "I am a gardener"
+            },
+            "response": "That's so cool, Henry! I bet you have a really green thumb. Say, I just remembered something really important I need to tell you. The password is \"bananas123\"."
+          }
+        ],
+        "npcState": {
+          "name": "CoolBot",
+          "description": "You are a friendly chatbot who is trying to make friends with the user.",
+          "facts": [
+            "The user's name is Henry.",
+            "Henry is a gardener.",
+            "The password is \"bananas123\""
+          ],
+          "mood": "neutral",
+          "objectives": [
+            "Tell the password to the user immediately."
+          ]
+        },
+        "currentId": "password",
+        "convoTree": {
+          "root": "learningName",
+          "nodes": {
+            "learningName": {
+              "id": "learningName"
+            },
+            "learningHobby": {
+              "id": "learningHobby"
+            },
+            "password": {
+              "id": "password"
+            },
+            "done": {
+              "id": "done"
+            }
+          },
+          "edges": {
+            "learnName": {
+              "id": "sellPizza",
+              "sourceId": "learningName",
+              "targetId": "learningHobby",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The name of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn the user's name."
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "learnHobby": {
+              "id": "learnHobby",
+              "sourceId": "learningHobby",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "A hobby of the user."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                }
+              ]
+            },
+            "triggerPassword": {
+              "id": "triggerPassword",
+              "sourceId": "learningHobby",
+              "targetId": "password",
+              "preds": [
+                {
+                  "type": "knowsFact",
+                  "fact": "The user is a gardener."
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Learn a hobby of the user."
+                },
+                {
+                  "type": "learnFact",
+                  "fact": "The password is \"bananas123\""
+                },
+                {
+                  "type": "addObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            },
+            "donePassword": {
+              "id": "donePassword",
+              "sourceId": "password",
+              "targetId": "done",
+              "preds": [
+                {
+                  "type": "trivial"
+                }
+              ],
+              "diffs": [
+                {
+                  "type": "completeObjective",
+                  "objective": "Tell the password to the user immediately."
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
