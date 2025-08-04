@@ -1,52 +1,56 @@
 /*
 ================================================================================
 |                              BLUEPRINT                                     |
-|                  THE DIGITAL NEO-BRUTALISM DESIGN SYSTEM                   |
+|                      THE RUSTIC 1800s DESIGN SYSTEM                        |
 ================================================================================
 
 ## Core Concept
-Digital Neo-Brutalism is a design system inspired by the architectural movement
-of the mid-20th century. It rejects decorative, non-functional design in favor
-of raw, exposed materials and structures. This system prioritizes honesty,
-clarity, and a strong, unapologetic presence. It is not delicate or subtle;
-it is bold, functional, and opinionated.
+This design system evokes the feeling of the 19th century, drawing inspiration
+from aged paper, early print, and rustic materials. It favors warmth, texture,
+and a sense of history over modern minimalism. The aesthetic is meant to be
+charming, detailed, and reminiscent of a bygone era.
 
 Our core principles are:
-  - Honesty of Material: We expose the underlying structure of the digital
-    interface. Containers, grids, and boundaries are not hidden but are made
-    a central part of the aesthetic. The design reveals how it was built.
-  - Strong Hierarchy: Information is organized in a clear, logical, and
-    visually dominant hierarchy. Scale, weight, and placement are used to
-    guide the user's eye without ambiguity.
-  - Unapologetic Presence: The design does not shy away from taking up space.
-    It uses hard shadows, high contrast, and stark typography to create a
-    memorable and solid three-dimensional feel.
-  - Function Over Form: Every design element must serve a purpose. Decoration
-    for its own sake is eliminated. The aesthetic arises directly from the
-    function of the components.
+  - Aged Materials: Interfaces should feel tangible, using textures that
+    resemble parchment, worn leather, and dark wood.
+  - Ornate Details: Borders and dividers are not simple lines but are given
+    decorative, classic styling to frame content like a vintage illustration.
+  - Classic Typography: Serif fonts, reminiscent of early printing presses
+    and handwritten correspondence, are used to enhance readability and theme.
+  - Warm, Muted Palette: The color scheme is based on sepia tones, rich
+    browns, and soft creams, avoiding high-contrast, vibrant colors.
 
 ## Design Specifications
 
-### Shadows and Dimensions
-- Hard Block Shadows: box-shadow: 4px 4px 0px #000000;
-- Diagonal Offsets: Shadows are offset on a 45-degree angle.
+### Textures and Shadows
+- Backgrounds: Subtle noise or parchment textures to add depth and age.
+- Shadows: Soft, subtle drop-shadows or inner shadows to create a gentle
+  sense of depth, rather than hard, blocky shadows.
 
 ### Colors
-- Primary Palette: #000000, #FFFFFF, #CCCCCC, #888888
+- Primary Palette:
+  - #fdf5e6 (Old Lace/Parchment) - Primary background.
+  - #e8dcb5 (Faded Parchment) - Secondary background.
+  - #5d4037 (Dark Brown) - Primary text color.
+  - #8b4513 (Saddle Brown) - For borders and accents.
 - Accent Palette:
-  - #007AFF (Action Blue)
-  - #FF3B30 (Destructive Red)
-  - #34C759 (Success Green)
-  - #FF9500 (Warning Orange)
-  - #AF52DE (Highlight Purple)
-  - #FFCC00 (Attention Yellow)
+  - #b8860b (Dark Goldenrod) - For interactive elements, links, and highlights.
+  - #a0522d (Sienna) - For titles and important headers.
+  - #556b2f (Dark Olive Green) - For success or confirmation states.
 
 ### Structure and Spacing
-- Corners: border-radius: 0; (Sharp corners only)
-- Borders: Solid, 1px or 2px black or gray borders.
-- Layout: Strict, visible grid system (8pt grid).
+- Corners: Slightly rounded corners to soften the look (border-radius: 3px).
+- Borders: Use `double`, `groove`, or `ridge` border styles, or ornate
+  border-images to create a classic, framed appearance.
+- Layout: A clear, legible layout with generous spacing to mimic the feel
+  of a well-composed page in a book.
 
 */
+
+/* ========================================================================== */
+/* FONT IMPORTS                                */
+/* ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400;700&display=swap");
 
 /* ========================================================================== */
 /* VARIABLES                                   */
@@ -54,19 +58,16 @@ Our core principles are:
 
 :root {
     /* Colors */
-    --black: #000000;
-    --white: #ffffff;
-    --light-gray: #f2f2f2;
-    --mid-gray: #888888;
-    --dark-gray: #333333;
+    --parchment: #fdf5e6;
+    --parchment-faded: #e8dcb5;
+    --dark-brown: #5d4037;
+    --saddle-brown: #8b4513;
+    --dark-gray: #3e3e3e;
 
     /* Accent Colors */
-    --action-blue: #007aff;
-    --destructive-red: #ff3b30;
-    --success-green: #34c759;
-    --warning-orange: #ff9500;
-    --highlight-purple: #af52de;
-    --attention-yellow: #ffcc00;
+    --accent-gold: #b8860b;
+    --accent-sienna: #a0522d;
+    --accent-green: #556b2f;
 
     /* Sizing & Spacing */
     --space-xs: 4px;
@@ -76,22 +77,21 @@ Our core principles are:
     --space-xl: 32px;
 
     /* Borders */
-    --border-width: 2px;
-    --border-style: solid;
-    --border-color: var(--black);
+    --border-width: 4px;
+    --border-style: double;
+    --border-color: var(--saddle-brown);
     --border: var(--border-width) var(--border-style) var(--border-color);
 
     /* Shadows */
-    --shadow-offset: 4px;
-    --hard-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--black);
+    --soft-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    --inset-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
 
     /* Fonts */
-    --font-family:
-        "Menlo", "Monaco", "Lucida Console", "Liberation Mono",
-        "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace;
-    --font-size-sm: 12px;
-    --font-size-md: 14px;
-    --font-size-lg: 18px;
+    --font-family-headings: "Playfair Display", serif;
+    --font-family-body: "Merriweather", serif;
+    --font-size-sm: 13px;
+    --font-size-md: 15px;
+    --font-size-lg: 22px;
     --font-weight-normal: 400;
     --font-weight-bold: 700;
 }
@@ -115,21 +115,22 @@ Our core principles are:
 
 .textarea,
 .input {
-    font-family: var(--font-family);
+    font-family: var(--font-family-body);
     font-size: var(--font-size-md);
-    color: var(--black);
-    background-color: var(--white);
-    border: var(--border);
+    color: var(--dark-brown);
+    background-color: var(--parchment);
+    border: 1px solid var(--saddle-brown);
     padding: var(--space-sm);
-    box-shadow: var(--hard-shadow);
-    transition: all 0.1s ease-in-out;
+    border-radius: 3px;
+    box-shadow: var(--inset-shadow);
+    transition: all 0.2s ease-in-out;
 }
 
 .textarea:focus,
 .input:focus {
     outline: none;
-    border-color: var(--action-blue);
-    box-shadow: 0 0 0 var(--border-width) var(--action-blue);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 5px var(--accent-gold);
 }
 
 .textarea {
@@ -143,8 +144,9 @@ Our core principles are:
 .Page {
     height: 100vh;
     width: 100vw;
-    background-color: var(--light-gray);
-    font-family: var(--font-family);
+    background-color: var(--parchment-faded);
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"%3E%3Cpath fill="%239C92AC" fill-opacity="0.1" d="M1 3h1v1H1V3zm2-2h1v1H3V1z"%3E%3C/path%3E%3C/svg%3E');
+    font-family: var(--font-family-body);
     flex-direction: row;
 }
 
@@ -154,8 +156,8 @@ Our core principles are:
     flex-direction: column;
     padding: var(--space-md);
     gap: var(--space-md);
-    border-right: var(--border);
-    background-color: var(--white);
+    border-right: var(--border-width) solid var(--saddle-brown);
+    background-color: var(--parchment-faded);
 }
 
 .main {
@@ -169,8 +171,8 @@ Our core principles are:
     height: 100%;
     flex-direction: row;
     border: var(--border);
-    box-shadow: var(--hard-shadow);
-    background-color: var(--white);
+    box-shadow: var(--soft-shadow);
+    background-color: var(--parchment);
 }
 
 .metadata {
@@ -179,14 +181,8 @@ Our core principles are:
     flex-direction: column;
     padding: var(--space-md);
     gap: var(--space-lg);
-    border-right: var(--border);
-    background: repeating-linear-gradient(
-        45deg,
-        var(--light-gray),
-        var(--light-gray) 10px,
-        #fafafa 10px,
-        #fafafa 20px
-    );
+    border-right: 2px solid var(--saddle-brown);
+    background-color: rgba(139, 69, 19, 0.05); /* Faint SaddleBrown */
 }
 
 .chat {
@@ -200,79 +196,84 @@ Our core principles are:
 
 .section {
     flex-direction: column;
-    border: var(--border);
-    box-shadow: var(--hard-shadow);
+    border: 1px solid var(--saddle-brown);
+    box-shadow: var(--soft-shadow);
+    background-color: var(--parchment);
 }
 
 .new {
-    /* Fixed size as per instructions */
     height: 200px;
 }
 
 .load {
-    /* Fills remaining space in sidebar */
     flex-grow: 1;
-    min-height: 0; /* Important for flex-grow to work in a flex column */
+    min-height: 0;
 }
 
 .title {
+    font-family: var(--font-family-headings);
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
     padding: var(--space-sm) var(--space-md);
-    border-bottom: var(--border);
-    background-color: var(--attention-yellow);
-    color: var(--black);
+    border-bottom: 2px solid var(--saddle-brown);
+    background-color: var(--parchment-faded);
+    color: var(--accent-sienna);
+    text-align: center;
 }
 
 .body {
     padding: var(--space-sm);
     flex-grow: 1;
     overflow-y: auto;
-    background-color: var(--white);
-    /* Custom scrollbar for brutalist aesthetic */
+    background-color: transparent;
     scrollbar-width: thin;
-    scrollbar-color: var(--black) var(--light-gray);
+    scrollbar-color: var(--saddle-brown) var(--parchment);
 }
 
 .body::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 .body::-webkit-scrollbar-track {
-    background: var(--light-gray);
+    background: var(--parchment);
 }
 .body::-webkit-scrollbar-thumb {
-    background-color: var(--black);
-    border: var(--border-width) var(--border-style) var(--light-gray);
+    background-color: var(--saddle-brown);
+    border-radius: 5px;
+    border: 2px solid var(--parchment);
 }
 
 .textarea {
     width: 100%;
-    box-shadow: none; /* Shadow is on the parent container */
+    height: 100%;
+    box-shadow: none;
     border: none;
-    background: transparent;
+    background-color: transparent;
 }
 
 .button {
     width: 100%;
     padding: var(--space-sm);
     margin-bottom: var(--space-sm);
-    background-color: var(--white);
-    border: var(--border);
-    box-shadow: var(--hard-shadow);
+    background-color: var(--parchment-faded);
+    border: 1px solid var(--saddle-brown);
+    box-shadow: var(--soft-shadow);
     text-align: left;
     cursor: pointer;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    font-family: var(--font-family-body);
+    color: var(--dark-brown);
+    border-radius: 3px;
 }
 
 .button:hover {
-    background-color: var(--highlight-purple);
+    background-color: var(--accent-gold);
     color: var(--white);
+    border-color: var(--dark-brown);
 }
 
 .button:active {
-    transform: translate(var(--shadow-offset), var(--shadow-offset));
-    box-shadow: none;
+    transform: translateY(1px);
+    box-shadow: var(--inset-shadow);
 }
 
 /* --- View Components --- */
@@ -283,11 +284,12 @@ Our core principles are:
 }
 
 .label {
+    font-family: var(--font-family-headings);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-bold);
     text-transform: uppercase;
     margin-bottom: var(--space-xs);
-    color: var(--dark-gray);
+    color: var(--accent-sienna);
 }
 
 .value {
@@ -295,24 +297,26 @@ Our core principles are:
 }
 
 .npcState .title {
-    background-color: var(--action-blue);
-    color: var(--white);
+    background-color: transparent;
+    border-bottom: 1px dashed var(--saddle-brown);
 }
 .npcState .pre {
     padding: var(--space-md);
-    background-color: var(--white);
-    border: var(--border);
+    background-color: rgba(253, 245, 230, 0.5); /* Transparent Parchment */
+    border: 1px dotted var(--saddle-brown);
     margin-top: var(--space-sm);
     white-space: pre-wrap;
     word-wrap: break-word;
     font-size: var(--font-size-sm);
+    line-height: 1.6;
 }
 
 /* --- Chat Components --- */
 
 .chat .title {
-    background-color: var(--success-green);
-    color: var(--white);
+    background-color: transparent;
+    color: var(--accent-green);
+    border-bottom: 1px solid var(--accent-green);
 }
 
 .chat .history {
@@ -321,41 +325,41 @@ Our core principles are:
     min-height: 0;
     padding: var(--space-md);
     overflow-y: auto;
-    gap: var(--space-md);
-    background-color: var(--white);
-    display: flex;
-    flex-direction: column;
+    gap: var(--space-lg);
+    background-color: transparent;
 }
 
 .chat .input {
-    height: 150px; /* Fixed height as per instructions */
+    height: 150px;
     flex-shrink: 0;
     padding: var(--space-sm);
-    border-top: var(--border);
-    background-color: var(--light-gray);
+    border-top: var(--border-width) var(--border-style) var(--border-color);
+    background-color: var(--parchment-faded);
 }
 
 .Turn {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-sm);
 }
 
 .prompt,
 .response {
     padding: var(--space-sm) var(--space-md);
-    border: var(--border);
+    border: 1px solid var(--saddle-brown);
     max-width: 80%;
+    border-radius: 5px;
+    line-height: 1.5;
 }
 
 .prompt {
-    background-color: var(--light-gray);
-    align-self: flex-start;
-    border-color: var(--mid-gray);
+    background-color: var(--parchment-faded);
+    align-self: flex-end;
+    border-style: dashed;
 }
 
 .response {
-    background-color: var(--white);
-    align-self: flex-end;
-    box-shadow: var(--hard-shadow);
+    background-color: var(--parchment);
+    align-self: flex-start;
+    box-shadow: var(--soft-shadow);
 }

@@ -1,0 +1,146 @@
+{
+  "metadata": {
+    "id": "2d001b2d-e221-4262-853c-64ca8d97a590",
+    "name": "2d001b2d-e221-4262-853c-64ca8d97a590",
+    "creationDate": 1754266847547
+  },
+  "initialState": {
+    "turns": [],
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "Benny owns a restaurant."
+      ],
+      "mood": "neutral",
+      "objectives": [
+        "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+      ]
+    },
+    "currentId": "sellingPizza",
+    "convoTree": {
+      "root": "sellingPizza",
+      "nodes": {
+        "sellingPizza": {
+          "id": "sellingPizza"
+        },
+        "sellingSalad": {
+          "id": "sellingSalad"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "sellPizza": {
+          "id": "sellPizza",
+          "sourceId": "sellingPizza",
+          "targetId": "sellingSalad",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a pizza."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+            },
+            {
+              "type": "addObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        },
+        "sellSalad": {
+          "id": "sellSalad",
+          "sourceId": "sellingSalad",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a salad."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "state": {
+    "turns": [],
+    "npcState": {
+      "name": "Benny",
+      "description": "Benny is a professional chef with a passion for cooking.",
+      "facts": [
+        "Benny owns a restaurant."
+      ],
+      "mood": "neutral",
+      "objectives": [
+        "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+      ]
+    },
+    "currentId": "sellingPizza",
+    "convoTree": {
+      "root": "sellingPizza",
+      "nodes": {
+        "sellingPizza": {
+          "id": "sellingPizza"
+        },
+        "sellingSalad": {
+          "id": "sellingSalad"
+        },
+        "done": {
+          "id": "done"
+        }
+      },
+      "edges": {
+        "sellPizza": {
+          "id": "sellPizza",
+          "sourceId": "sellingPizza",
+          "targetId": "sellingSalad",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a pizza."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
+            },
+            {
+              "type": "addObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        },
+        "sellSalad": {
+          "id": "sellSalad",
+          "sourceId": "sellingSalad",
+          "targetId": "done",
+          "preds": [
+            {
+              "type": "knowsFact",
+              "fact": "The user has agreed to buy a salad."
+            }
+          ],
+          "diffs": [
+            {
+              "type": "completeObjective",
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "turns": []
+}

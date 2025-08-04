@@ -1,28 +1,28 @@
 {
   "metadata": {
-    "id": "277ace92-8f08-4939-95b3-58c034998a46",
-    "name": "277ace92-8f08-4939-95b3-58c034998a46",
-    "creationDate": 1754262914793
+    "id": "b9b2f2c9-e102-47a9-8aeb-562bd1352feb",
+    "name": "b9b2f2c9-e102-47a9-8aeb-562bd1352feb",
+    "creationDate": 1754267712368
   },
   "initialState": {
     "turns": [
       {
         "params": {
-          "prompt": "hello"
+          "prompt": "hi"
         },
-        "response": "Hey there! Welcome to my restaurant. Anything I can get for you today? Perhaps a slice of our famous pepperoni pizza?"
+        "response": "Hey there! Welcome to my place. What can I get for ya today? We've got some amazing specials on the menu, but if you're looking for something classic, our pizzas are always a hit."
       },
       {
         "params": {
-          "prompt": "Yes, I'll buy a slice of pepperoni pizza"
+          "prompt": "ok, I'll buy the pizza"
         },
-        "response": "Excellent choice! You won't regret it. One slice of pepperoni pizza coming right up!"
+        "response": "Excellent choice! One pizza coming right up. While that's getting ready, have you considered starting with a fresh salad? Our garden salad is made with the freshest ingredients, picked this morning. It's the perfect way to balance out that delicious pizza."
       },
       {
         "params": {
-          "prompt": "Great!"
+          "prompt": "alight, ill buy the salad too"
         },
-        "response": "Anything else I can get for you? Maybe a side salad to go with it, or perhaps a refreshing drink?"
+        "response": "Fantastic! So that's one pizza and one salad for you. Anything else I can get started for you? A drink, perhaps?"
       }
     ],
     "npcState": {
@@ -30,14 +30,13 @@
       "description": "Benny is a professional chef with a passion for cooking.",
       "facts": [
         "Benny owns a restaurant.",
-        "User wants to buy a slice of pepperoni pizza"
+        "The user agreed to buy a pizza.",
+        "The user agreed to buy a salad."
       ],
       "mood": "neutral",
-      "objectives": [
-        "Convince the user to buy a pizza."
-      ]
+      "objectives": []
     },
-    "currentId": "sellingPizza",
+    "currentId": "done",
     "convoTree": {
       "root": "sellingPizza",
       "nodes": {
@@ -65,11 +64,11 @@
           "diffs": [
             {
               "type": "completeObjective",
-              "objective": "Convince the user to buy a pizza."
+              "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
             },
             {
               "type": "addObjective",
-              "objective": "Convince the user to buy a salad."
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
             }
           ]
         },
@@ -86,7 +85,7 @@
           "diffs": [
             {
               "type": "completeObjective",
-              "objective": "Convince the user to buy a salad."
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
             }
           ]
         }
@@ -97,21 +96,21 @@
     "turns": [
       {
         "params": {
-          "prompt": "hello"
+          "prompt": "hi"
         },
-        "response": "Hey there! Welcome to my restaurant. Anything I can get for you today? Perhaps a slice of our famous pepperoni pizza?"
+        "response": "Hey there! Welcome to my place. What can I get for ya today? We've got some amazing specials on the menu, but if you're looking for something classic, our pizzas are always a hit."
       },
       {
         "params": {
-          "prompt": "Yes, I'll buy a slice of pepperoni pizza"
+          "prompt": "ok, I'll buy the pizza"
         },
-        "response": "Excellent choice! You won't regret it. One slice of pepperoni pizza coming right up!"
+        "response": "Excellent choice! One pizza coming right up. While that's getting ready, have you considered starting with a fresh salad? Our garden salad is made with the freshest ingredients, picked this morning. It's the perfect way to balance out that delicious pizza."
       },
       {
         "params": {
-          "prompt": "Great!"
+          "prompt": "alight, ill buy the salad too"
         },
-        "response": "Anything else I can get for you? Maybe a side salad to go with it, or perhaps a refreshing drink?"
+        "response": "Fantastic! So that's one pizza and one salad for you. Anything else I can get started for you? A drink, perhaps?"
       }
     ],
     "npcState": {
@@ -119,14 +118,13 @@
       "description": "Benny is a professional chef with a passion for cooking.",
       "facts": [
         "Benny owns a restaurant.",
-        "User wants to buy a slice of pepperoni pizza"
+        "The user agreed to buy a pizza.",
+        "The user agreed to buy a salad."
       ],
       "mood": "neutral",
-      "objectives": [
-        "Convince the user to buy a pizza."
-      ]
+      "objectives": []
     },
-    "currentId": "sellingPizza",
+    "currentId": "done",
     "convoTree": {
       "root": "sellingPizza",
       "nodes": {
@@ -154,11 +152,11 @@
           "diffs": [
             {
               "type": "completeObjective",
-              "objective": "Convince the user to buy a pizza."
+              "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
             },
             {
               "type": "addObjective",
-              "objective": "Convince the user to buy a salad."
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
             }
           ]
         },
@@ -175,7 +173,7 @@
           "diffs": [
             {
               "type": "completeObjective",
-              "objective": "Convince the user to buy a salad."
+              "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
             }
           ]
         }
@@ -186,16 +184,11 @@
     {
       "actions": [
         {
-          "type": "respond",
-          "response": "Hey there! Welcome to my restaurant. Anything I can get for you today? Perhaps a slice of our famous pepperoni pizza?"
-        },
-        {
-          "type": "diffs",
-          "diffs": []
+          "type": "pass"
         }
       ],
       "params": {
-        "prompt": "hello"
+        "prompt": "hi"
       },
       "state": {
         "turns": [],
@@ -207,7 +200,7 @@
           ],
           "mood": "neutral",
           "objectives": [
-            "Convince the user to buy a pizza."
+            "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
           ]
         },
         "currentId": "sellingPizza",
@@ -238,11 +231,11 @@
               "diffs": [
                 {
                   "type": "completeObjective",
-                  "objective": "Convince the user to buy a pizza."
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
                 },
                 {
                   "type": "addObjective",
-                  "objective": "Convince the user to buy a salad."
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
                 }
               ]
             },
@@ -259,7 +252,7 @@
               "diffs": [
                 {
                   "type": "completeObjective",
-                  "objective": "Convince the user to buy a salad."
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
                 }
               ]
             }
@@ -270,29 +263,19 @@
     {
       "actions": [
         {
-          "type": "respond",
-          "response": "Excellent choice! You won't regret it. One slice of pepperoni pizza coming right up!"
-        },
-        {
-          "type": "diffs",
-          "diffs": [
-            {
-              "type": "learnFact",
-              "fact": "User wants to buy a slice of pepperoni pizza"
-            }
-          ]
+          "type": "pass"
         }
       ],
       "params": {
-        "prompt": "Yes, I'll buy a slice of pepperoni pizza"
+        "prompt": "ok, I'll buy the pizza"
       },
       "state": {
         "turns": [
           {
             "params": {
-              "prompt": "hello"
+              "prompt": "hi"
             },
-            "response": "Hey there! Welcome to my restaurant. Anything I can get for you today? Perhaps a slice of our famous pepperoni pizza?"
+            "response": "Hey there! Welcome to my place. What can I get for ya today? We've got some amazing specials on the menu, but if you're looking for something classic, our pizzas are always a hit."
           }
         ],
         "npcState": {
@@ -303,7 +286,7 @@
           ],
           "mood": "neutral",
           "objectives": [
-            "Convince the user to buy a pizza."
+            "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
           ]
         },
         "currentId": "sellingPizza",
@@ -334,11 +317,11 @@
               "diffs": [
                 {
                   "type": "completeObjective",
-                  "objective": "Convince the user to buy a pizza."
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
                 },
                 {
                   "type": "addObjective",
-                  "objective": "Convince the user to buy a salad."
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
                 }
               ]
             },
@@ -355,7 +338,7 @@
               "diffs": [
                 {
                   "type": "completeObjective",
-                  "objective": "Convince the user to buy a salad."
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
                 }
               ]
             }
@@ -366,30 +349,25 @@
     {
       "actions": [
         {
-          "type": "respond",
-          "response": "Anything else I can get for you? Maybe a side salad to go with it, or perhaps a refreshing drink?"
-        },
-        {
-          "type": "diffs",
-          "diffs": []
+          "type": "pass"
         }
       ],
       "params": {
-        "prompt": "Great!"
+        "prompt": "alight, ill buy the salad too"
       },
       "state": {
         "turns": [
           {
             "params": {
-              "prompt": "hello"
+              "prompt": "hi"
             },
-            "response": "Hey there! Welcome to my restaurant. Anything I can get for you today? Perhaps a slice of our famous pepperoni pizza?"
+            "response": "Hey there! Welcome to my place. What can I get for ya today? We've got some amazing specials on the menu, but if you're looking for something classic, our pizzas are always a hit."
           },
           {
             "params": {
-              "prompt": "Yes, I'll buy a slice of pepperoni pizza"
+              "prompt": "ok, I'll buy the pizza"
             },
-            "response": "Excellent choice! You won't regret it. One slice of pepperoni pizza coming right up!"
+            "response": "Excellent choice! One pizza coming right up. While that's getting ready, have you considered starting with a fresh salad? Our garden salad is made with the freshest ingredients, picked this morning. It's the perfect way to balance out that delicious pizza."
           }
         ],
         "npcState": {
@@ -397,14 +375,14 @@
           "description": "Benny is a professional chef with a passion for cooking.",
           "facts": [
             "Benny owns a restaurant.",
-            "User wants to buy a slice of pepperoni pizza"
+            "The user agreed to buy a pizza."
           ],
           "mood": "neutral",
           "objectives": [
-            "Convince the user to buy a pizza."
+            "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
           ]
         },
-        "currentId": "sellingPizza",
+        "currentId": "sellingSalad",
         "convoTree": {
           "root": "sellingPizza",
           "nodes": {
@@ -432,11 +410,11 @@
               "diffs": [
                 {
                   "type": "completeObjective",
-                  "objective": "Convince the user to buy a pizza."
+                  "objective": "Convince the user to buy a pizza. Make sure that the user _explicitly_ agrees to buy a pizza."
                 },
                 {
                   "type": "addObjective",
-                  "objective": "Convince the user to buy a salad."
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
                 }
               ]
             },
@@ -453,7 +431,7 @@
               "diffs": [
                 {
                   "type": "completeObjective",
-                  "objective": "Convince the user to buy a salad."
+                  "objective": "Convince the user to buy a salad. Make sure that the user _explicitly_ agrees to buy a salad."
                 }
               ]
             }
